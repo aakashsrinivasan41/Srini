@@ -97,6 +97,7 @@ target_roles:
     - "Financial Analyst / FP&A Analyst"
     - "Business Analyst"
   adjacent:                # slightly out of lane — cast wide (NO sales/CS/AM)
+    - "Solutions Consultant"
     - "Product Analyst / Associate Product Manager"
     - "Research Analyst (equity / industry / market)"
     - "Strategy & Operations Analyst"
@@ -126,7 +127,6 @@ exclude_keywords:          # auto-skip if title contains these
   - "account executive"
   - "sales engineer"
   - "sales representative"
-  - "solutions consultant"
   - "business development"
   - "relationship manager"
   - "sdr"
