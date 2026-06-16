@@ -7,7 +7,7 @@ file, so it works for any person/field — swap the profile, keep the engine.
 
 | Track | What it does | Status |
 |-------|--------------|--------|
-| **Job Radar** (Python) | The "brain" — scans friendly boards (Greenhouse/Lever/Ashby + Remotive) during the day, scores against your profile, de-dupes, tracks status, and builds a ranked HTML dashboard. | **Ready** |
+| **Job Radar** (Python) | The "brain" — scans friendly boards (Greenhouse/Lever/Ashby + Remotive, plus optional low-volume LinkedIn discovery) during the day, scores against your profile, de-dupes, tracks status, and builds a ranked HTML dashboard. | **Ready** |
 | **Claude-for-Chrome** | The "hands" — clicks into a posting and fills the fields while you supervise. Best for ugly forms (Workday) and hostile sites (LinkedIn) where you submit by hand. | **Ready** |
 
 Both tracks read the **same profile**, which is what makes the whole thing
@@ -54,8 +54,30 @@ Edit `config/sources.yaml`. Find a company's identifier from its careers URL:
 | Lever | `jobs.lever.co/<site>` | `<site>` |
 | Ashby | `jobs.ashbyhq.com/<org>` | `<org>` |
 
-The seeded list is just a starting point — replace it with your targets
-(FactSet-adjacent data/fintech shops, asset managers, etc.).
+The seeded list is just a starting point — replace it with your targets.
+**Coverage note:** Greenhouse/Lever/Ashby skew fintech + tech/data. Traditional
+asset managers & banks (BlackRock, Fidelity, MSCI, S&P, Morningstar, …) run on
+Workday/iCIMS, which the radar can't scrape — the **LinkedIn** source covers
+those for discovery; you apply to them by hand.
+
+### LinkedIn (discovery only — off by default)
+
+⚠️  LinkedIn's User Agreement prohibits automated access and they ban
+*accounts* for it. This source uses **only the public guest endpoint** (no
+login, no cookies) at low volume, purely to surface roles into your dashboard.
+It **never applies** — LinkedIn rows are flagged "apply by hand."
+
+Enable it in `config/sources.yaml` (`linkedin.enabled: true`) only if you accept
+that. Built-in politeness so requests don't look robotic:
+
+- delays are **randomized** between `min_delay_seconds`/`max_delay_seconds`
+- query order is **shuffled** every run
+- `max_requests` is a hard ceiling per scan; `pages_per_query` keeps volume low
+- HTTP backoff/retry if LinkedIn pushes back (429/5xx)
+
+Deliberately **not** included: proxy/IP rotation, fingerprint spoofing, or
+CAPTCHA-solving. Those are evasion, escalate ToS violations, and aren't needed
+for low-volume personal search. Keep yourself (a human) on the actual applying.
 
 ### What gets scored (every profile signal is used)
 

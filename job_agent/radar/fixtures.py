@@ -71,6 +71,35 @@ REMOTIVE_PAYLOAD = {
 }
 
 
+# A realistic slice of LinkedIn's public guest-endpoint HTML (two job cards).
+LINKEDIN_HTML = """
+<ul class="jobs-search__results-list">
+  <li>
+    <div class="base-card" data-entity-urn="urn:li:jobPosting:3811111111">
+      <a class="base-card__full-link" href="https://www.linkedin.com/jobs/view/data-analyst-at-lever-co-3811111111?refId=xyz"></a>
+      <div class="base-search-card__info">
+        <h3 class="base-search-card__title">Data Analyst</h3>
+        <h4 class="base-search-card__subtitle"><a class="hidden-nested-link" href="/company/lever">Lever Co</a></h4>
+        <span class="job-search-card__location">New York, NY</span>
+        <time class="job-search-card__listdate" datetime="2026-06-12">2 days ago</time>
+      </div>
+    </div>
+  </li>
+  <li>
+    <div class="base-card" data-entity-urn="urn:li:jobPosting:3822222222">
+      <a class="base-card__full-link" href="https://www.linkedin.com/jobs/view/risk-analyst-at-bigbank-3822222222?refId=abc"></a>
+      <div class="base-search-card__info">
+        <h3 class="base-search-card__title">Risk Analyst</h3>
+        <h4 class="base-search-card__subtitle"><a class="hidden-nested-link" href="/company/bigbank">BigBank</a></h4>
+        <span class="job-search-card__location">New York, NY</span>
+        <time class="job-search-card__listdate" datetime="2026-06-13">1 day ago</time>
+      </div>
+    </div>
+  </li>
+</ul>
+"""
+
+
 def demo_jobs() -> List[Job]:
     return (
         greenhouse.parse(GREENHOUSE_PAYLOAD, "Greenhouse Co")

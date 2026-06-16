@@ -2,4 +2,4 @@
     parse(payload, company) -> list[Job]   (pure, testable)
     fetch(**cfg)            -> list[Job]    (network)
 """
-from . import ashby, greenhouse, lever, remotive  # noqa: F401
+from . import ashby, greenhouse, lever, linkedin, remotive  # noqa: F401

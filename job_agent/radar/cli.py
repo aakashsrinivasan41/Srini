@@ -57,6 +57,10 @@ def cmd_scan(args):
     matched = [matcher.evaluate(j, strict_location=args.strict_location) for j in jobs]
     keep = [j for j in matched if not j.rejected and j.score >= args.min_score]
     print(f"\nFetched {len(jobs)} jobs · {len(keep)} match your profile.")
+    li_n = sum(1 for j in keep if j.source == "linkedin")
+    if li_n:
+        warn = " — that's a lot; triage and apply by hand" if li_n > 25 else " — apply to these by hand"
+        print(f"  ({li_n} from LinkedIn{warn}; automated LinkedIn applying risks your account)")
 
     store = Store(DB_PATH)
     res = store.upsert(keep)

@@ -58,6 +58,23 @@ def run(base_dir: str) -> int:
     ash = next(j for j in jobs if j.title == "Quantitative Analyst")
     check("ashby compensation captured", "$120K" in ash.salary_raw)
 
+    # --- LinkedIn HTML parser + cross-source dedupe ---
+    from .models import Job
+    from .runner import _dedupe
+    from .sources import linkedin
+    li = linkedin.parse_html(fixtures.LINKEDIN_HTML)
+    li_by_title = {j.title: j for j in li}
+    check("linkedin parses 2 cards", len(li) == 2, f"got {len(li)}")
+    check("linkedin company", li_by_title.get("Data Analyst") and li_by_title["Data Analyst"].company == "Lever Co")
+    check("linkedin url + id", li_by_title["Data Analyst"].url.startswith("https://www.linkedin.com/jobs/view/")
+          and li_by_title["Data Analyst"].external_id == "3811111111")
+    ats_da = Job(source="lever", company="Lever Co.", title="Data Analyst", url="https://ex.com/lv/da")
+    deduped = _dedupe([ats_da] + li)
+    titles = {j.title for j in deduped}
+    sources_for_da = {j.source for j in deduped if j.title == "Data Analyst"}
+    check("dedupe drops LinkedIn dup of ATS", sources_for_da == {"lever"})
+    check("dedupe keeps unique LinkedIn role", "Risk Analyst" in titles)
+
     # --- matcher end-to-end ---
     profile = load_profile(base_dir)
     matcher = Matcher(profile)

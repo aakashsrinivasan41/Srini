@@ -12,24 +12,70 @@
 #  so a wrong/empty token is obvious immediately (shows "0 jobs" or an error).
 # ──────────────────────────────────────────────────────────────────────────
 
+# NOTE ON COVERAGE: Greenhouse/Lever/Ashby skew toward fintech + tech/data
+# companies. Most traditional asset managers & banks (BlackRock, Fidelity, MSCI,
+# S&P, Morningstar, State Street, etc.) run on Workday/iCIMS, which this radar
+# can't scrape — use the LinkedIn source below to discover those and apply by
+# hand. The lists below are a STARTING palette: `scan` prints a job count per
+# board, so verify/prune anything that returns 0.
+
 greenhouse:
+  # fintech / payments
   - { token: robinhood,  company: Robinhood }
   - { token: coinbase,   company: Coinbase }
-  - { token: databricks, company: Databricks }
   - { token: stripe,     company: Stripe }
+  - { token: brex,       company: Brex }
+  - { token: plaid,      company: Plaid }
+  - { token: affirm,     company: Affirm }
+  - { token: sofi,       company: SoFi }
+  - { token: gemini,     company: Gemini }
+  - { token: chime,      company: Chime }
+  - { token: marqeta,    company: Marqeta }
+  - { token: nerdwallet, company: NerdWallet }
+  # data / analytics platforms
+  - { token: databricks, company: Databricks }
+  - { token: snowflake,  company: Snowflake }
+  - { token: datadog,    company: Datadog }
+  # large tech (lots of analyst/data roles)
   - { token: airbnb,     company: Airbnb }
   - { token: dropbox,    company: Dropbox }
+  - { token: doordash,   company: DoorDash }
+  - { token: instacart,  company: Instacart }
+  - { token: pinterest,  company: Pinterest }
 
 lever:
   # Add target companies that use Lever, e.g. { site: <site>, company: <Name> }
   []
 
 ashby:
-  - { org: Ramp,   company: Ramp }
-  - { org: openai, company: OpenAI }
-  - { org: Linear, company: Linear }
+  - { org: Ramp,    company: Ramp }
+  - { org: Mercury, company: Mercury }
+  - { org: openai,  company: OpenAI }
+  - { org: Linear,  company: Linear }
 
 remotive:
   enabled: true
   limit_per_keyword: 50      # jobs fetched per search keyword
   max_keywords: 6            # how many of profile.search_keywords to query
+
+# ── LinkedIn (DISCOVERY ONLY) ───────────────────────────────────────────────
+#  ⚠️  LinkedIn's User Agreement prohibits automated access and they ban
+#  ACCOUNTS for it. This uses ONLY the public guest endpoint (no login, no
+#  cookies) at low volume, to surface matching roles into your dashboard.
+#  It never applies — you apply to every LinkedIn role by hand.
+#  Leave it OFF unless you accept that risk; keep volume low if you turn it on.
+linkedin:
+  enabled: false
+  locations:
+    - "New York City Metropolitan Area"
+    - "San Francisco Bay Area"
+  experience_levels: "2,3"   # 1=Intern 2=Entry 3=Associate 4=Mid-Senior 5=Dir 6=Exec
+  posted_within_days: 7
+  pages_per_query: 1         # ~25 listings/page — keep low to stay polite
+  max_keywords: 4            # how many of profile.search_keywords to query
+  # Politeness / anti-pattern controls: delays are RANDOMIZED between these
+  # bounds (no fixed robotic cadence), query order is shuffled each run, and
+  # max_requests is a hard ceiling per scan. Raise volume at your own risk.
+  min_delay_seconds: 3.0
+  max_delay_seconds: 7.0
+  max_requests: 20
