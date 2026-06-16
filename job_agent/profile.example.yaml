@@ -92,14 +92,11 @@ target_roles:
     - "Investment Operations Analyst"
     - "Portfolio Analytics Analyst"
     - "Performance & Risk Analyst"
-    - "Client Solutions / Client Success Analyst"
     - "Implementation / Onboarding Analyst"
     - "Data Analyst"
     - "Financial Analyst / FP&A Analyst"
     - "Business Analyst"
-  adjacent:                # slightly out of lane — cast wide
-    - "Sales Engineer / Solutions Consultant (fintech/data)"
-    - "Technical Account Manager / Customer Success (SaaS)"
+  adjacent:                # slightly out of lane — cast wide (NO sales/CS/AM)
     - "Product Analyst / Associate Product Manager"
     - "Research Analyst (equity / industry / market)"
     - "Strategy & Operations Analyst"
@@ -111,12 +108,9 @@ search_keywords:
   - "investment analytics"
   - "portfolio analytics"
   - "investment operations"
-  - "client solutions analyst"
   - "data analyst finance"
   - "financial analyst"
   - "business analyst"
-  - "solutions consultant"
-  - "customer success analyst fintech"
 
 exclude_keywords:          # auto-skip if title contains these
   - "senior"
@@ -126,6 +120,17 @@ exclude_keywords:          # auto-skip if title contains these
   - "principal"
   - "staff"
   - "PhD required"
+  # --- avoid: Customer Success / Account Management / Sales-oriented ---
+  - "customer success"
+  - "account manager"
+  - "account executive"
+  - "sales engineer"
+  - "sales representative"
+  - "solutions consultant"
+  - "business development"
+  - "relationship manager"
+  - "sdr"
+  - "bdr"
 
 # ── Rules the agent MUST follow ────────────────────────────────────────────
 rules:
