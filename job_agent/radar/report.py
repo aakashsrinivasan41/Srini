@@ -2,6 +2,7 @@
 from __future__ import annotations
 
 import html
+import re
 from datetime import datetime
 from typing import List
 
@@ -146,3 +147,51 @@ document.querySelectorAll('#t th').forEach(function(th,i){{
 }});
 </script>
 </body></html>"""
+
+
+def slugify(text: str) -> str:
+    s = re.sub(r"[^a-z0-9]+", "-", (text or "").lower()).strip("-")
+    return s[:50] or "job"
+
+
+def _salary_line(row: dict) -> str:
+    if row.get("salary_max"):
+        lo = row.get("salary_min")
+        sal = f"${lo // 1000}k–${row['salary_max'] // 1000}k" if lo and lo != row["salary_max"] else f"${row['salary_max'] // 1000}k"
+    else:
+        sal = "not listed"
+    ask = f"${row['suggested_ask'] // 1000}k" if row.get("suggested_ask") else "—"
+    return f"{sal} · suggested ask: {ask}"
+
+
+def render_packet(row: dict, info_sheet: str, chrome_prompt: str) -> str:
+    """A self-contained, paste-ready application packet for Claude-for-Chrome."""
+    matched = ", ".join(row_matched(row)) or "—"
+    return f"""# Application packet — {row['title']} @ {row['company']}
+
+**Apply here:** {row['url']}
+
+- Location: {row.get('location_raw') or '—'}  ({_BUCKET_LABEL.get(row.get('location_bucket'), '?')})
+- Salary: {_salary_line(row)}
+- Match score: {row.get('score', 0)} · matched: {matched}
+
+---
+## 1) Open the posting above → open the Claude side panel → paste this:
+
+{chrome_prompt}
+
+---
+## 2) My info sheet (Claude fills fields from this)
+
+```
+{info_sheet}
+```
+
+---
+## 3) This specific role
+- Title:    {row['title']}
+- Company:  {row['company']}
+- Location: {row.get('location_raw') or '—'}
+- Source:   {row.get('source', '')}
+- URL:      {row['url']}
+"""

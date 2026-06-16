@@ -32,6 +32,11 @@ def run(base_dir: str) -> int:
     check("parse $120K – $150K", parse_salaries("$120K – $150K") == [120000, 150000])
     check("parse $95,000-$120,000", parse_salaries("$95,000-$120,000") == [95000, 120000])
     check("parse ignores tiny $", parse_salaries("a $5 coffee") == [])
+    check("parse 120k bare", parse_salaries("around 120k base") == [120000])
+    check("parse USD 120,000", parse_salaries("USD 120,000 per year") == [120000])
+    check("parse hourly $58/hr", parse_salaries("$58/hr") == [120640])
+    check("parse ignores 401(k)", parse_salaries("401(k) match and benefits") == [])
+    check("parse ignores 401k word", parse_salaries("strong 401k plan") == [])
 
     # --- unit: suggested ask (the profile's salary rule) ---
     check("ask: no salary -> anchor", suggest_ask(None, None) == 100000)
@@ -116,6 +121,38 @@ def run(base_dir: str) -> int:
     check("NY outranks SF",
           by_title["Investment Analytics Analyst"].score > by_title["Associate Product Manager"].score
           or True)  # ranking sanity; not a hard guarantee across different keyword hits
+
+    # --- richer filtering: company exclusion + recency ---
+    from .profile import Profile
+    from .matching import parse_posted_date
+    px = Profile({
+        "target_roles": {"core": ["Data Analyst"]},
+        "exclude_companies": ["BadCorp"],
+        "rules": {"posted_within_days": 30},
+    }, "test", "test")
+    mx = Matcher(px)
+    from .models import Job as _Job
+    bad = mx.evaluate(_Job(source="x", company="BadCorp", title="Data Analyst", url="http://x/1"))
+    check("exclude company drops role", bad.rejected and "excluded company" in bad.reject_reason)
+    stale = mx.evaluate(_Job(source="x", company="GoodCorp", title="Data Analyst",
+                             url="http://x/2", posted_at="2020-01-01"))
+    check("recency drops stale role", stale.rejected and "stale" in stale.reject_reason)
+    check("posted-date parses epoch ms", parse_posted_date("1700000000000") is not None)
+    check("posted-date parses ISO", parse_posted_date("2026-06-10T00:00:00Z") is not None)
+
+    # --- info sheet + application packet ---
+    sheet = profile.info_sheet()
+    check("info_sheet has sections", "PERSONAL" in sheet and "WORK AUTHORIZATION" in sheet)
+    from .report import render_packet, slugify
+    sample_row = {
+        "title": "Data Analyst", "company": "Acme Inc", "url": "http://x/job",
+        "location_raw": "New York, NY", "location_bucket": "ny", "source": "greenhouse",
+        "salary_min": 95000, "salary_max": 120000, "suggested_ask": 108000,
+        "score": 16.5, "matched": '["data analyst"]',
+    }
+    pkt = render_packet(sample_row, sheet, "PASTE-PROMPT")
+    check("packet has apply link + role", "Apply here" in pkt and "Data Analyst" in pkt and "PASTE-PROMPT" in pkt)
+    check("slugify", slugify("Acme Inc / Sr.") == "acme-inc-sr")
 
     # --- state roundtrip ---
     with tempfile.TemporaryDirectory() as tmp:

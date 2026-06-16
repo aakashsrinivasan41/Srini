@@ -38,6 +38,33 @@ python3 -m radar list         # ranked table in the terminal
 python3 -m radar list --all   # include applied/skipped/hidden
 python3 -m radar mark <id> applied   # also: skipped | hidden
 python3 -m radar sources      # show configured boards
+
+python3 -m radar packet            # paste-ready Chrome packets for the top matches
+python3 -m radar packet <id>       # ...for one specific job
+```
+
+### Application packets (hand a match to Claude-for-Chrome)
+
+`packet` turns a tracked job into a single self-contained Markdown file in
+`packets/` (gitignored — it holds your personal info) containing: the apply
+link, the standing Claude-for-Chrome instructions, your info sheet, and the
+role's details. Open one, paste it into the Claude side panel on the job page,
+and it fills the form — stopping before submit for your review.
+
+### Richer filtering knobs (in `profile.yaml`)
+
+- `exclude_companies: [...]` — never surface these companies.
+- `rules.posted_within_days: N` — skip postings older than N days (best-effort).
+- Salary parsing handles `$120k`, `$120,000`, `USD 120,000`, ranges, and hourly
+  (`$58/hr` → annualized), and ignores `401(k)` so it won't misread it as pay.
+
+### Multiple people on one install
+
+Default is one folder per person. On a shared machine/account you can instead
+keep several profiles and point at one per run:
+
+```bash
+JOB_RADAR_PROFILE=friend.yaml python3 -m radar scan
 ```
 
 `scan` prints, per board, how many jobs it returned (or an error), so a wrong

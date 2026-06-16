@@ -3,7 +3,7 @@ from __future__ import annotations
 
 import os
 import re
-from typing import List
+from typing import List, Optional
 
 try:
     import yaml
@@ -66,6 +66,15 @@ class Profile:
     def exclude_keywords(self) -> List[str]:
         return [str(k).strip().lower() for k in (self.data.get("exclude_keywords") or []) if str(k).strip()]
 
+    @property
+    def exclude_companies(self) -> List[str]:
+        return [str(c).strip() for c in (self.data.get("exclude_companies") or []) if str(c).strip()]
+
+    @property
+    def posted_within_days(self) -> Optional[int]:
+        v = self.rules.get("posted_within_days")
+        return int(v) if v else None
+
     # -- locations --
     @property
     def remote_ok(self) -> bool:
@@ -96,8 +105,64 @@ class Profile:
         """Keywords to feed the Remotive aggregator search."""
         return self.search_keywords[:limit]
 
+    def info_sheet(self) -> str:
+        """A human-readable summary of personal data for application packets."""
+        d = self.data
+        ident = d.get("identity") or {}
+        auth = d.get("work_authorization") or {}
+        eeo = d.get("eeo") or {}
+        exp = d.get("experience") or {}
+        loc = d.get("locations") or {}
+        sal = self.rules.get("salary") or {}
+        addr = ident.get("current_address") or {}
+        L: List[str] = ["PERSONAL"]
+        L.append(f"  Name:     {ident.get('full_name', '')}")
+        L.append(f"  Email:    {ident.get('email', '')}")
+        L.append(f"  Phone:    {ident.get('phone', '')}")
+        if addr:
+            L.append(f"  Address:  {addr.get('line1', '')}, {addr.get('city', '')}, "
+                     f"{addr.get('state', '')} {addr.get('zip', '')}")
+        if ident.get("linkedin"):
+            L.append(f"  LinkedIn: {ident.get('linkedin')}")
+        L += ["", "WORK AUTHORIZATION",
+              f"  {auth.get('citizenship', '')}; sponsorship needed: "
+              f"{'yes' if auth.get('require_sponsorship_now') else 'no'}"]
+        L += ["", "EEO / SELF-ID (only if asked)",
+              f"  Gender: {eeo.get('gender', '')} · Orientation: {eeo.get('sexual_orientation', '')}",
+              f"  Race/Ethnicity: {eeo.get('race_ethnicity', '')} · "
+              f"Hispanic/Latino: {'yes' if eeo.get('hispanic_or_latino') else 'no'}",
+              f"  Veteran: {eeo.get('veteran_status', '')} · Disability: {eeo.get('disability_status', '')}"]
+        L += ["", f"EXPERIENCE — {exp.get('total_years', '?')} yrs ({exp.get('level', '')})"]
+        for w in d.get("work_history") or []:
+            L.append(f"  • {w.get('company', '')} — {w.get('title', '')} — "
+                     f"{w.get('location', '')} — {w.get('start', '')}–{w.get('end', '')}")
+        L += ["", "EDUCATION"]
+        for e in d.get("education") or []:
+            gpa = f" (GPA {e.get('gpa')})" if e.get("gpa") else ""
+            conc = f", {e.get('concentration')}" if e.get("concentration") else ""
+            L.append(f"  • {e.get('school', '')} — {e.get('degree', '')}{conc} — {e.get('end', '')}{gpa}")
+        pri = ", ".join(loc.get("priority", []))
+        L += ["", f"LOCATIONS (priority): {pri} · relocate: "
+              f"{'yes' if loc.get('willing_to_relocate') else 'no'} · "
+              f"remote: {'yes' if loc.get('remote_ok') else 'no'}"]
+        L += ["", "SALARY",
+              f"  Floor: skip roles whose posted max is under ${int(sal.get('hard_floor_usd', 80000)) // 1000}k",
+              f"  Desired-ask anchor ~${int(sal.get('anchor_usd', 100000)) // 1000}k "
+              "(ask within range if low; scale up into six figures)"]
+        L += ["", "RULES",
+              "  No 'why this company' essays. If an essay is REQUIRED to submit → skip the application.",
+              "  Stop before final submit for my review. Pause on login/CAPTCHA."]
+        return "\n".join(L)
+
 
 def find_profile_path(base_dir: str) -> tuple[str, str]:
+    # Optional override (e.g. a shared install: JOB_RADAR_PROFILE=friend.yaml)
+    override = os.environ.get("JOB_RADAR_PROFILE")
+    if override:
+        path = override if os.path.isabs(override) else os.path.join(base_dir, override)
+        if os.path.exists(path):
+            return path, os.path.basename(path)
+        raise ProfileError(f"JOB_RADAR_PROFILE points to a missing file: {path}")
     for name in PROFILE_CANDIDATES:
         path = os.path.join(base_dir, name)
         if os.path.exists(path):

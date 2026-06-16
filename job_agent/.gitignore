@@ -9,6 +9,9 @@ resumes/
 *.pdf
 *.docx
 
+# Generated application packets (contain personal info)
+packets/
+
 # Generated dashboard + local state / scratch
 report.html
 *.sqlite

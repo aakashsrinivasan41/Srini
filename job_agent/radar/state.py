@@ -97,6 +97,10 @@ class Store:
         q += " ORDER BY (status='new') DESC, score DESC, company ASC"
         return [dict(r) for r in self.conn.execute(q, params).fetchall()]
 
+    def get(self, key: str) -> dict | None:
+        row = self.conn.execute("SELECT * FROM jobs WHERE key = ?", (key,)).fetchone()
+        return dict(row) if row else None
+
     def set_status(self, key: str, status: str) -> bool:
         if status not in ALL_STATUSES:
             raise ValueError(f"invalid status '{status}' (use {ALL_STATUSES})")

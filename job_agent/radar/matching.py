@@ -11,6 +11,7 @@ Consumes EVERY targeting signal in the profile:
 from __future__ import annotations
 
 import re
+from datetime import datetime, timezone
 from typing import List, Optional
 
 from .models import Job
@@ -36,22 +37,68 @@ JUNIOR_QUALIFIERS = ("associate", "assistant", "junior", "jr", "entry", "early c
 _STOPWORDS = {"and", "or", "the", "of", "a", "an", "for", "to", "in", "fp&a", "&"}
 
 _YEARS_RE = re.compile(r"(\d{1,2})\s*(?:\+|plus)?\s*(?:-|–|—|to)?\s*(\d{1,2})?\s*\+?\s*years?", re.I)
-_SALARY_RE = re.compile(r"\$\s?(\d{1,3}(?:,\d{3})+|\d{2,3})\s?([kK])?")
 _PHD_RE = re.compile(r"ph\.?\s?d\.?[^.\n]{0,40}requir", re.I)
+
+# Salary patterns. We only accept clearly-money tokens to avoid false positives.
+_DOLLAR_K_RE = re.compile(r"(?:\$|usd)\s*(\d{2,3})\s*k\b", re.I)         # $120k / usd 120k
+_PLAIN_K_RE = re.compile(r"\b(\d{2,3})\s*k\b", re.I)                     # 120k
+_FULL_RE = re.compile(r"(?:\$|usd\s*)(\d{2,3}(?:,\d{3})+|\d{5,7})", re.I)  # $120,000 / usd 120000
+_COMMA_RE = re.compile(r"\b(\d{2,3}(?:,\d{3})+)\b")                      # 120,000
+_HOURLY_RE = re.compile(r"\$?\s*(\d{1,3}(?:\.\d+)?)\s*(?:/|per\s+)\s*(?:hr|hour)", re.I)
+_RETIREMENT = {401, 403}      # 401(k)/403(b) are plans, not salaries
+_HOURS_PER_YEAR = 2080
+
+
+def _add(vals: set, n: float) -> None:
+    if 10_000 <= n <= 1_000_000:
+        vals.add(int(round(n)))
 
 
 def parse_salaries(text: str) -> List[int]:
-    """Extract plausible annual USD figures from text ($120k, $120,000, ranges)."""
-    vals: List[int] = []
-    for m in _SALARY_RE.finditer(text or ""):
-        num = int(m.group(1).replace(",", ""))
-        if m.group(2):  # explicit 'k'
-            num *= 1000
-        elif num < 1000:  # bare 2-3 digit number with no 'k' -> ambiguous, skip
-            continue
-        if 10_000 <= num <= 1_000_000:
-            vals.append(num)
-    return vals
+    """Extract plausible annual USD figures: $120k, $120,000, USD 120000, ranges,
+    and hourly ($58/hr -> annualized). Ignores 401(k)/403(b) and tiny amounts."""
+    t = text or ""
+    vals: set = set()
+    for m in _HOURLY_RE.finditer(t):
+        _add(vals, float(m.group(1)) * _HOURS_PER_YEAR)
+    for rex in (_DOLLAR_K_RE, _PLAIN_K_RE):
+        for m in rex.finditer(t):
+            n = int(m.group(1))
+            if n not in _RETIREMENT:
+                _add(vals, n * 1000)
+    for rex in (_FULL_RE, _COMMA_RE):
+        for m in rex.finditer(t):
+            _add(vals, int(m.group(1).replace(",", "")))
+    return sorted(vals)
+
+
+def parse_posted_date(value: str) -> Optional[datetime]:
+    """Best-effort parse of a posting date across source formats (ISO, epoch
+    ms/s, YYYY-MM-DD). Returns None when unknown so callers don't over-filter."""
+    s = (value or "").strip()
+    if not s:
+        return None
+    if s.isdigit():
+        ts = int(s)
+        if ts > 10_000_000_000:  # epoch milliseconds (Lever)
+            ts //= 1000
+        try:
+            return datetime.fromtimestamp(ts, tz=timezone.utc)
+        except (ValueError, OSError):
+            return None
+    try:
+        dt = datetime.fromisoformat(s.replace("Z", "+00:00"))
+        return dt if dt.tzinfo else dt.replace(tzinfo=timezone.utc)
+    except ValueError:
+        pass
+    try:
+        return datetime.strptime(s[:10], "%Y-%m-%d").replace(tzinfo=timezone.utc)
+    except ValueError:
+        return None
+
+
+def _norm_company(s: str) -> str:
+    return re.sub(r"\s+", " ", re.sub(r"[^a-z0-9 ]", " ", (s or "").lower())).strip()
 
 
 def required_min_years(text: str) -> Optional[int]:
@@ -106,6 +153,8 @@ class Matcher:
         self.experience_cap = profile.experience_cap
         self.salary_floor = profile.salary_floor
         self.salary_anchor = profile.salary_anchor
+        self.exclude_companies = {_norm_company(c) for c in profile.exclude_companies}
+        self.posted_within_days = profile.posted_within_days
 
         excludes = profile.exclude_keywords
         self.phd_check = any("phd" in e for e in excludes)
@@ -143,6 +192,8 @@ class Matcher:
             return self._reject(job, reason)
         if self.phd_check and _PHD_RE.search(blob):
             return self._reject(job, "requires a PhD")
+        if self.exclude_companies and _norm_company(job.company) in self.exclude_companies:
+            return self._reject(job, f"excluded company: {job.company}")
 
         # 2) Positive keyword score -------------------------------------------
         score = 0.0
@@ -174,6 +225,14 @@ class Matcher:
         min_yrs = required_min_years(job.description)
         if min_yrs is not None and min_yrs > self.experience_cap:
             return self._reject(job, f"requires {min_yrs}+ yrs (> {self.experience_cap})")
+
+        # 3b) Recency (optional; only filters when a date is known) ------------
+        if self.posted_within_days:
+            dt = parse_posted_date(job.posted_at)
+            if dt is not None:
+                age = (datetime.now(timezone.utc) - dt).days
+                if age > self.posted_within_days:
+                    return self._reject(job, f"stale ({age}d old > {self.posted_within_days}d)")
 
         # 4) Salary ------------------------------------------------------------
         sal = parse_salaries(job.salary_raw) or parse_salaries(job.description)

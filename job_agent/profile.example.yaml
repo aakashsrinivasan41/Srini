@@ -113,6 +113,8 @@ search_keywords:
   - "financial analyst"
   - "business analyst"
 
+exclude_companies: []      # never apply to these companies (e.g. ["Acme Corp"])
+
 exclude_keywords:          # auto-skip if title contains these
   - "senior"
   - "lead"
@@ -135,6 +137,7 @@ exclude_keywords:          # auto-skip if title contains these
 # ── Rules the agent MUST follow ────────────────────────────────────────────
 rules:
   experience_cap_years: 3            # skip roles requiring more than 3 yrs
+  # posted_within_days: 30           # optional: skip postings older than N days
 
   salary:
     hard_floor_usd: 80000            # if posted salary MAX < 80k -> SKIP role

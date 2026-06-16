@@ -18,13 +18,23 @@ import webbrowser
 
 from .matching import Matcher
 from .profile import ProfileError, load_profile, load_sources
-from .report import cli_table, render_html
+from .report import cli_table, render_html, render_packet, slugify
 from .runner import collect
 from .state import Store
 
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))  # .../job_agent
 DB_PATH = os.path.join(BASE_DIR, ".cache", "radar.sqlite")
 REPORT_PATH = os.path.join(BASE_DIR, "report.html")
+PACKETS_DIR = os.path.join(BASE_DIR, "packets")
+CHROME_PROMPT_PATH = os.path.join(BASE_DIR, "claude_chrome_prompt.md")
+
+
+def _chrome_prompt() -> str:
+    try:
+        with open(CHROME_PROMPT_PATH, "r", encoding="utf-8") as fh:
+            return fh.read().strip()
+    except OSError:
+        return "(claude_chrome_prompt.md not found — see the repo for the standing instructions)"
 
 
 def _write_report(rows, stats, profile_name):
@@ -150,6 +160,45 @@ def cmd_demo(args):
     return 0
 
 
+def cmd_packet(args):
+    try:
+        profile = load_profile(BASE_DIR)
+    except ProfileError as exc:
+        print(f"error: {exc}")
+        return 2
+    if profile.is_example:
+        print("note: using profile.example.yaml — packets will contain placeholder personal info.\n")
+    info = profile.info_sheet()
+    prompt = _chrome_prompt()
+
+    store = Store(DB_PATH)
+    if args.id:
+        row = store.get(args.id)
+        rows = [row] if row else []
+        if not row:
+            print(f"No job found with id {args.id} (see `list` for ids).")
+    else:
+        rows = store.fetch(min_score=args.min_score)[: args.limit]
+    store.close()
+    if not rows:
+        print("Nothing to package — run `scan` first.")
+        return 1
+
+    os.makedirs(PACKETS_DIR, exist_ok=True)
+    written = []
+    for row in rows:
+        fname = f"{slugify(row['company'])}-{slugify(row['title'])}-{row['key']}.md"
+        path = os.path.join(PACKETS_DIR, fname)
+        with open(path, "w", encoding="utf-8") as fh:
+            fh.write(render_packet(row, info, prompt))
+        written.append(fname)
+    print(f"Wrote {len(written)} packet(s) to {PACKETS_DIR}/ :")
+    for name in written:
+        print(f"  {name}")
+    print("\nOpen one, then paste its contents into the Claude side panel on the job page.")
+    return 0
+
+
 def cmd_selftest(args):
     from . import selftest
     return selftest.run(BASE_DIR)
@@ -178,6 +227,12 @@ def build_parser():
     s.add_argument("id")
     s.add_argument("status", choices=["applied", "skipped", "hidden", "new", "seen"])
     s.set_defaults(func=cmd_mark)
+
+    s = sub.add_parser("packet", help="build paste-ready Claude-for-Chrome packet(s)")
+    s.add_argument("id", nargs="?", help="a job id (from `list`); omit to package the top matches")
+    s.add_argument("--limit", type=int, default=5)
+    s.add_argument("--min-score", type=float, default=0.0)
+    s.set_defaults(func=cmd_packet)
 
     sub.add_parser("sources", help="list configured sources").set_defaults(func=cmd_sources)
     sub.add_parser("demo", help="offline demo from sample data").set_defaults(func=cmd_demo)
