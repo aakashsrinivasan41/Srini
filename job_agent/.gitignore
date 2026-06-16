@@ -1,0 +1,18 @@
+# Real personal data — never commit
+profile.yaml
+profile.local.yaml
+*.local.yaml
+*.local.yml
+
+# Resume / document assets (personal)
+resumes/
+*.pdf
+*.docx
+
+# Local state / scratch
+*.sqlite
+*.db
+.cache/
+__pycache__/
+*.pyc
+.env

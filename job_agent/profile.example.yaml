@@ -1,0 +1,150 @@
+# ──────────────────────────────────────────────────────────────────────────
+#  Job Application Agent — PROFILE TEMPLATE
+#
+#  This is the single source of truth the agent (and Claude-for-Chrome) reads.
+#  HOW TO USE:
+#    1. Copy this file to `profile.yaml`  (that filename is gitignored, so your
+#       real personal info NEVER gets committed to git).
+#    2. Fill in the real values below.
+#    3. To set this up for a different person (e.g. a friend in another field),
+#       just hand them a fresh copy of this template — swap the `identity`,
+#       `work_history`, `target_roles`, and `search_keywords` blocks.
+#
+#  The `rules` block at the bottom is the important/clever part — it encodes
+#  the salary logic, the experience cap, and the "no essays" behavior.
+# ──────────────────────────────────────────────────────────────────────────
+
+identity:
+  full_name: "First Last"
+  email: "you@example.com"
+  phone: "000-000-0000"
+  current_address:
+    line1: "123 Example St"
+    city: "City"
+    state: "ST"
+    zip: "00000"
+  linkedin: "linkedin.com/in/your-handle"
+  website: ""        # optional
+  github: ""         # optional
+
+work_authorization:
+  citizenship: "US Citizen"
+  authorized_to_work_us: true
+  require_sponsorship_now: false
+  require_sponsorship_future: false
+
+# Voluntary EEO / self-ID answers. Only used when a form explicitly asks;
+# most of these are optional and can be left as "Decline to self-identify".
+eeo:
+  gender: "Male"
+  sexual_orientation: "Heterosexual / Straight"
+  race_ethnicity: "Asian"
+  hispanic_or_latino: false
+  veteran_status: "I am not a protected veteran"
+  disability_status: "No, I don't have a disability"
+
+experience:
+  total_years: 2
+  level: "Entry-level"
+
+education:
+  - school: "University Name"
+    degree: "B.S. in Field"
+    concentration: ""
+    location: "City, ST"
+    start: "YYYY-MM"
+    end: "YYYY-MM"
+    gpa: ""          # optional — leave blank to skip when a form asks
+
+# Most recent first. Used to fill "add work experience" sections on forms.
+work_history:
+  - company: "Company Name"
+    title: "Job Title"
+    location: "City, ST"
+    start: "YYYY-MM"
+    end: "Present"
+  - company: "Previous Company"
+    title: "Job Title"
+    location: "City, ST"
+    start: "YYYY-MM"
+    end: "YYYY-MM"
+
+resume_files:
+  default: "resumes/resume_default.pdf"     # path on your Mac (gitignored)
+  # variants:
+  #   data:    "resumes/resume_data.pdf"
+  #   finance: "resumes/resume_finance.pdf"
+
+# ── Search targeting ───────────────────────────────────────────────────────
+locations:
+  priority:
+    - "New York metropolitan area"
+    - "San Francisco Bay Area"
+  willing_to_relocate: true
+  remote_ok: true
+
+# Cast a WIDE net: core lane + adjacent/stretch roles. All entry-level.
+# (Defaults below are tuned for an investment-analytics / finance-data profile;
+#  edit freely for a different person.)
+target_roles:
+  core:
+    - "Investment Analytics Analyst"
+    - "Investment Operations Analyst"
+    - "Portfolio Analytics Analyst"
+    - "Performance & Risk Analyst"
+    - "Client Solutions / Client Success Analyst"
+    - "Implementation / Onboarding Analyst"
+    - "Data Analyst"
+    - "Financial Analyst / FP&A Analyst"
+    - "Business Analyst"
+  adjacent:                # slightly out of lane — cast wide
+    - "Sales Engineer / Solutions Consultant (fintech/data)"
+    - "Technical Account Manager / Customer Success (SaaS)"
+    - "Product Analyst / Associate Product Manager"
+    - "Research Analyst (equity / industry / market)"
+    - "Strategy & Operations Analyst"
+    - "Consulting Analyst (financial services / data)"
+    - "BI / Reporting / Revenue Analyst"
+    - "Quantitative Analyst (entry-level)"
+
+search_keywords:
+  - "investment analytics"
+  - "portfolio analytics"
+  - "investment operations"
+  - "client solutions analyst"
+  - "data analyst finance"
+  - "financial analyst"
+  - "business analyst"
+  - "solutions consultant"
+  - "customer success analyst fintech"
+
+exclude_keywords:          # auto-skip if title contains these
+  - "senior"
+  - "lead"
+  - "manager"
+  - "director"
+  - "principal"
+  - "staff"
+  - "PhD required"
+
+# ── Rules the agent MUST follow ────────────────────────────────────────────
+rules:
+  experience_cap_years: 3            # skip roles requiring more than 3 yrs
+
+  salary:
+    hard_floor_usd: 80000            # if posted salary MAX < 80k -> SKIP role
+    anchor_usd: 100000
+    # How to answer a "desired salary" field:
+    #   - posted range tops out below six figures -> ask within range (< 100k)
+    #   - posted range reaches six figures        -> anchor 100k, scale up with range
+    #   - a number is required but none is posted -> state 100000
+
+  free_response:
+    write_why_this_company: false
+    # If a free-text essay (e.g. "Why this company?", required cover letter) is
+    # REQUIRED to submit -> ABANDON this application and move on.
+    skip_application_if_essay_required: true
+
+  human_in_the_loop:
+    stop_before_submit: true         # never click final submit automatically
+    pause_on_login_or_captcha: true
