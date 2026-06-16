@@ -9,7 +9,8 @@ resumes/
 *.pdf
 *.docx
 
-# Local state / scratch
+# Generated dashboard + local state / scratch
+report.html
 *.sqlite
 *.db
 .cache/

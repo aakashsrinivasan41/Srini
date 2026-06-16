@@ -1,0 +1,35 @@
+# ──────────────────────────────────────────────────────────────────────────
+#  Job Radar — sources to scan.
+#
+#  These are STARTER examples — verify/replace with the companies YOU care about.
+#  How to find a company's identifier (look at their careers-page URL):
+#    Greenhouse : boards.greenhouse.io/<token>        -> use <token>
+#    Lever      : jobs.lever.co/<site>                -> use <site>
+#    Ashby      : jobs.ashbyhq.com/<org>              -> use <org>
+#
+#  After editing, run `python3 -m radar sources` to see what's configured and
+#  `python3 -m radar scan` — the scan prints how many jobs each board returned,
+#  so a wrong/empty token is obvious immediately (shows "0 jobs" or an error).
+# ──────────────────────────────────────────────────────────────────────────
+
+greenhouse:
+  - { token: robinhood,  company: Robinhood }
+  - { token: coinbase,   company: Coinbase }
+  - { token: databricks, company: Databricks }
+  - { token: stripe,     company: Stripe }
+  - { token: airbnb,     company: Airbnb }
+  - { token: dropbox,    company: Dropbox }
+
+lever:
+  # Add target companies that use Lever, e.g. { site: <site>, company: <Name> }
+  []
+
+ashby:
+  - { org: Ramp,   company: Ramp }
+  - { org: openai, company: OpenAI }
+  - { org: Linear, company: Linear }
+
+remotive:
+  enabled: true
+  limit_per_keyword: 50      # jobs fetched per search keyword
+  max_keywords: 6            # how many of profile.search_keywords to query
