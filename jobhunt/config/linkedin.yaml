@@ -1,0 +1,66 @@
+# =====================================================================
+# linkedin.yaml — searches via LinkedIn's free public guest endpoint.
+#
+# No token, no login, no paid actor. Each search maps to LinkedIn's own job
+# search filters. Keywords support boolean OR (uppercase) and quotes.
+#
+# Fields per search:
+#   label              short name for the source tag
+#   keywords           the search query (OR / quotes supported)
+#   location           "United States", a city, or a state
+#   posted_within_days freshness filter (LinkedIn's "date posted")
+#   remote             true = remote-only
+#   max_results        cap (each page is 25; keep modest to avoid throttling)
+#
+# Run:
+#   python -m jobhunt.cli linkedin                         (all searches)
+#   python -m jobhunt.cli linkedin --only li-solutions     (test one)
+#
+# If LinkedIn throttles you (429), wait a bit, lower max_results, or run fewer
+# searches at once. If parsing returns 0, the markup may have changed — inspect
+# a job card in your browser and tell Claude the new class name.
+# =====================================================================
+
+searches:
+  - label: li-solutions
+    keywords: '"solutions consultant" OR "solutions engineer" OR "AI solutions" OR "forward deployed"'
+    location: "United States"
+    posted_within_days: 7
+    remote: false
+    max_results: 75
+
+  - label: li-implementation
+    keywords: '"implementation consultant" OR "implementation manager" OR "AI enablement"'
+    location: "United States"
+    posted_within_days: 7
+    remote: false
+    max_results: 50
+
+  - label: li-analytics
+    keywords: '"portfolio analytics" OR "risk analyst" OR "performance analyst" OR "investment operations"'
+    location: "United States"
+    posted_within_days: 7
+    remote: false
+    max_results: 75
+
+  - label: li-strategy-ops
+    keywords: '"strategy and operations" OR "business operations" OR "revenue operations"'
+    location: "United States"
+    posted_within_days: 7
+    remote: false
+    max_results: 50
+
+  - label: li-ir-markets
+    keywords: '"investor relations" OR "capital markets" OR "fund operations"'
+    location: "United States"
+    posted_within_days: 7
+    remote: false
+    max_results: 50
+
+  # A remote-only sweep across your strongest track
+  - label: li-remote-solutions
+    keywords: '"solutions consultant" OR "solutions engineer" OR "customer success engineer"'
+    location: "United States"
+    posted_within_days: 7
+    remote: true
+    max_results: 50

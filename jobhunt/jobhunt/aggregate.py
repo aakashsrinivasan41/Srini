@@ -75,13 +75,43 @@ def fetch_apify(only: str | None = None, verbose: bool = True) -> list[Job]:
     return jobs
 
 
-def fetch_combined(use_apify: bool = True, verbose: bool = True) -> list[Job]:
-    """ATS boards + (optionally) Apify aggregators, deduped together."""
+def fetch_linkedin(only: str | None = None, verbose: bool = True) -> list[Job]:
+    """Run the searches in config/linkedin.yaml (free guest endpoint)."""
+    from .sources.linkedin import fetch_search
+
+    cfg_path = CONFIG_DIR / "linkedin.yaml"
+    if not cfg_path.exists():
+        return []
+    searches = (load_yaml(cfg_path) or {}).get("searches", [])
+    jobs: list[Job] = []
+    for s in searches:
+        label = s.get("label", "linkedin")
+        if only and only != label:
+            continue
+        try:
+            got = fetch_search(s)
+            jobs.extend(got)
+            if verbose:
+                print(f"  ✓ linkedin:{label}: {len(got)} postings")
+        except Exception as e:  # noqa: BLE001
+            if verbose:
+                print(f"  ✗ linkedin:{label}: {type(e).__name__}: {e}")
+    return jobs
+
+
+def fetch_combined(use_apify: bool = True, use_linkedin: bool = True,
+                   verbose: bool = True) -> list[Job]:
+    """ATS boards + (optionally) Apify + LinkedIn aggregators, deduped together."""
     jobs = fetch_all(verbose=verbose)  # already deduped within ATS set
+    extra: list[Job] = []
     if use_apify:
-        jobs = _dedupe(jobs + fetch_apify(verbose=verbose))
+        extra += fetch_apify(verbose=verbose)
+    if use_linkedin:
+        extra += fetch_linkedin(verbose=verbose)
+    if extra:
+        jobs = _dedupe(jobs + extra)
         if verbose:
-            print(f"\nCombined total after Apify + dedupe: {len(jobs)}")
+            print(f"\nCombined total after aggregators + dedupe: {len(jobs)}")
     return jobs
 
 

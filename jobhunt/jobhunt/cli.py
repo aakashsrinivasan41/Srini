@@ -55,8 +55,18 @@ def cmd_apify(args) -> None:
     print(f"\nSaved {len(jobs)} apify jobs (merged total {len(merged)}) -> {DATA_DIR/'jobs.json'}")
 
 
+def cmd_linkedin(args) -> None:
+    jobs = aggregate.fetch_linkedin(only=args.only)
+    if args.limit:
+        jobs = jobs[: args.limit]
+    existing = aggregate.load() if (DATA_DIR / "jobs.json").exists() else []
+    merged = aggregate._dedupe(existing + jobs)
+    aggregate.save(merged)
+    print(f"\nSaved {len(jobs)} linkedin jobs (merged total {len(merged)}) -> {DATA_DIR/'jobs.json'}")
+
+
 def cmd_all(_args) -> None:
-    jobs = aggregate.fetch_combined(use_apify=True)
+    jobs = aggregate.fetch_combined(use_apify=True, use_linkedin=True)
     aggregate.save(jobs)
     print(f"\nSaved {len(jobs)} jobs -> {DATA_DIR/'jobs.json'}")
 
@@ -190,7 +200,12 @@ def main(argv=None) -> None:
     a.add_argument("--limit", type=int, help="cap number of jobs kept")
     a.set_defaults(func=cmd_apify)
 
-    sub.add_parser("all", help="ATS + Apify combined").set_defaults(func=cmd_all)
+    li = sub.add_parser("linkedin", help="run LinkedIn guest-endpoint searches (free)")
+    li.add_argument("--only", help="run only the search with this label")
+    li.add_argument("--limit", type=int, help="cap number of jobs kept")
+    li.set_defaults(func=cmd_linkedin)
+
+    sub.add_parser("all", help="ATS + Apify + LinkedIn combined").set_defaults(func=cmd_all)
 
     r = sub.add_parser("rank", help="score jobs and print shortlist")
     r.add_argument("--top", type=int, help="show only top N")
