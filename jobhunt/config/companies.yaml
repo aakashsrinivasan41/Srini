@@ -1,0 +1,36 @@
+# =====================================================================
+# companies.yaml — target companies and which ATS each uses.
+#
+# `ats`  : one of greenhouse | lever | ashby
+# `slug` : the board token in the careers URL, NOT the marketing name.
+#
+# IMPORTANT: slugs below are best-effort seeds. Companies change ATSes.
+# Verify (and auto-correct) every slug on your machine with:
+#     python -m jobhunt.cli discover "Company Name"
+# It probes all three ATSes and tells you the working slug.
+#
+# How to find a slug by hand: open the company's careers page and look at
+# the URL of any job posting:
+#   boards.greenhouse.io/<slug>/...      -> greenhouse, slug = <slug>
+#   jobs.lever.co/<slug>/...             -> lever, slug = <slug>
+#   jobs.ashbyhq.com/<slug>/...          -> ashby, slug = <slug>
+# Workday / Taleo / iCIMS boards have no clean public API — track those
+# manually (listed at the bottom as `unsupported`).
+# =====================================================================
+
+companies:
+  - { name: Anthropic, ats: greenhouse, slug: anthropic, verified: false }
+  - { name: OpenAI,    ats: ashby,      slug: openai,    verified: false }
+  - { name: Ramp,      ats: ashby,      slug: ramp,      verified: false }
+  - { name: Brex,      ats: greenhouse, slug: brex,      verified: false }
+  - { name: Plaid,     ats: greenhouse, slug: plaid,     verified: false }
+  - { name: Addepar,   ats: greenhouse, slug: addepar,   verified: false }
+  - { name: Coinbase,  ats: greenhouse, slug: coinbase,  verified: false }
+  - { name: Hebbia,    ats: ashby,      slug: hebbia,    verified: false }
+  - { name: Sigma,     ats: greenhouse, slug: sigmacomputing, verified: false }
+  - { name: SoFi,      ats: greenhouse, slug: sofi,      verified: false }
+
+# Companies whose boards aren't on a clean public API (Workday/Taleo/etc.).
+# Listed so they show up in your tracker; check these manually.
+unsupported:
+  - { name: Wells Fargo, careers: https://www.wellsfargojobs.com/ }

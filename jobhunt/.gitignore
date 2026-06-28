@@ -1,0 +1,11 @@
+.env
+__pycache__/
+*.pyc
+data/*.json
+data/*.csv
+assets/*.pdf
+.venv/
+venv/
+
+!data/.gitkeep
+!assets/.gitkeep

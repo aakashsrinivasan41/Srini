@@ -1,0 +1,213 @@
+# =====================================================================
+# profile.yaml — single source of truth for search, ranking, and form-fill
+# Edit this file freely; everything downstream reads from it.
+# =====================================================================
+
+identity:
+  first_name: Aakash
+  last_name: Srinivasan
+  full_name: Aakash Srinivasan
+  email: aakashsrinivasan41@outlook.com
+  phone: "650-430-1864"
+  linkedin: https://www.linkedin.com/in/aakashsrini
+  github: ""
+  website: ""
+  location_city: Foster City
+  location_state: CA
+  location_country: United States
+  address: 1387 Tarpon St, Foster City, CA 94404
+  timezone: America/Los_Angeles
+
+# Path to the resume PDF used for upload + grounding the cover-letter writer.
+# Use an absolute path on your machine.
+resume_path: ./assets/Aakash_Srinivasan_Resume.pdf
+
+work_authorization:
+  authorized_to_work_us: true            # set accurately for each field
+  require_sponsorship: null              # true / false / null (answer per-app)
+
+# ---------------------------------------------------------------------
+# What you're looking for. Drives the ROLE component of the score.
+# ---------------------------------------------------------------------
+roles:
+  # A job title scores well if it matches any of these (case-insensitive substring).
+  include:
+    - solutions consultant
+    - solutions engineer
+    - forward deployed
+    - ai enablement
+    - ai solutions
+    - implementation
+    - solutions architect
+    - portfolio analytics
+    - risk analyst
+    - performance analyst
+    - investment analyst
+    - middle office
+    - fund operations
+    - fund accounting
+    - investor relations
+    - strategy & operations
+    - strategy and operations
+    - business operations
+    - product operations
+    - capital markets
+    - customer success engineer
+    - technical account manager
+  # Hard kill-switch: drop the job entirely if title matches any of these.
+  exclude:
+    - portfolio manager
+    - senior software engineer
+    - staff engineer
+    - principal engineer
+    - intern
+    - internship
+    - director
+    - vice president
+    - vp,
+    - head of
+    - chief
+  # Seniority you'll consider (substring match against title; empty = any).
+  seniority_ok:
+    - analyst
+    - senior analyst
+    - associate
+    - consultant
+    - manager        # individual-contributor manager titles (TAM, etc.)
+    - engineer
+    - specialist
+    - ""             # allow untitled-seniority roles through
+
+# ---------------------------------------------------------------------
+# Location preferences (ranked). Drives the LOCATION component.
+# Each tier lists substrings matched against the job's location string.
+# ---------------------------------------------------------------------
+locations:
+  tiers:
+    - weight: 1.00   # top choice
+      match: [new york, nyc, ny, manhattan, brooklyn]
+    - weight: 0.92   # close second
+      match: [san francisco, sf, san mateo, foster city, peninsula, redwood city, palo alto, menlo park]
+    - weight: 0.80   # other bay area
+      match: [bay area, oakland, berkeley, south san francisco, mountain view, sunnyvale, san jose, santa clara, cupertino]
+    - weight: 0.55   # everywhere else (any US/other city not above)
+      match: ["*"]
+  # Remote: most preferred lifestyle-wise, but treated as competitive.
+  # Applied as a separate signal, not a tier.
+  remote_weight: 0.88
+
+# ---------------------------------------------------------------------
+# Compensation. Drives the COMP component + the on-site gate.
+# Thresholds are annual USD base (or stated range midpoint).
+# ---------------------------------------------------------------------
+compensation:
+  min_by_location:
+    new_york: 125000
+    sf_bay: 100000
+    other: 110000
+  # On-site full-time (4-5 days/wk) is only acceptable at/above this number,
+  # regardless of city.
+  onsite_floor: 125000
+  # If a posting lists no comp, don't penalize — score on other signals.
+  unknown_comp_penalty: 0.0
+
+# ---------------------------------------------------------------------
+# Work arrangement preference. Drives the ARRANGEMENT component.
+# ---------------------------------------------------------------------
+arrangement:
+  remote: 1.00
+  hybrid: 0.95
+  onsite: 0.60        # gets the onsite_floor comp gate applied on top
+
+# ---------------------------------------------------------------------
+# Dream companies — a flat boost when the posting's company matches.
+# ---------------------------------------------------------------------
+favorite_companies:
+  - anthropic
+  - openai
+  - addepar
+  - ramp
+  - brex
+  - plaid
+  - hebbia
+  - sigma
+  - sofi
+  - wells fargo
+  - coinbase
+
+# ---------------------------------------------------------------------
+# Scoring weights (must sum to ~1.0). Tune to taste.
+# ---------------------------------------------------------------------
+weights:
+  role: 0.35
+  location: 0.25
+  comp: 0.15
+  arrangement: 0.15
+  company: 0.10
+
+# Minimum total score (0-100) for a job to land in the shortlist.
+shortlist_threshold: 55
+
+# ---------------------------------------------------------------------
+# Experience guardrail — keep results in your early-career sweet spot.
+# Graduated May 2024, ~2 yrs full-time + internships. We do NOT want to
+# burn shortlist slots on roles that require deep tenure or a quant/heavy-
+# engineering pedigree. The scorer parses each description for these.
+# ---------------------------------------------------------------------
+experience:
+  my_years: 2                 # current full-time YOE (used for messaging)
+  # Drop a job if its description demands MORE than this many years.
+  max_required_years: 4
+  # If years can't be parsed but these "over-qualified" signals appear,
+  # heavily penalize (not auto-drop, since wording varies).
+  overqualified_signals:
+    - "senior software engineer"
+    - "staff engineer"
+    - "principal"
+    - "phd"
+    - "ph.d"
+    - "quantitative researcher"
+    - "quant researcher"
+    - "quantitative developer"
+    - "c++"
+    - "deep learning research"
+    - "10+ years"
+    - "8+ years"
+    - "7+ years"
+    - "6+ years"
+    - "5+ years"
+    - "minimum of 5 years"
+    - "at least 5 years"
+  # Phrases that signal a GOOD early-career fit — small positive nudge.
+  earlycareer_signals:
+    - "entry level"
+    - "early career"
+    - "new grad"
+    - "0-2 years"
+    - "1-3 years"
+    - "2+ years"
+    - "associate"
+    - "analyst"
+    - "junior"
+    - "no experience required"
+
+# ---------------------------------------------------------------------
+# Free-text positioning used to ground the cover-letter / answer writer.
+# Keep this factual — the generator is instructed never to invent beyond it.
+# ---------------------------------------------------------------------
+narrative:
+  headline: >
+    Investment Analytics Consultant at FactSet who turns real client/business
+    workflows into AI-powered tools — sitting at the intersection of domain
+    expertise, product, and the customer.
+  proof_points:
+    - Oversee an $8.5M book of 10 asset-management firms ($500B AUM, 300 users) at FactSet, primary contact for front- and middle-office teams.
+    - Built an Outlook Client Project Tracker (Python + Anthropic API) that classifies client email threads into status/urgency/owner/summary with a hallucination guard, feeding a self-refreshing Excel dashboard.
+    - Pair-coded a Fund Factsheet Data Extractor that consolidated 150 PowerPoint factsheets into one import-ready file, cutting a two-week manual job to one day.
+    - Prototyped a Salesforce Case Logger that reads client email threads via the Anthropic API and drives the browser to file cases automatically with per-step fault tolerance.
+    - Reverse-engineered FactSet risk calculations in Excel validation models to reconcile discrepancies and automate batch reporting across 50+ funds, cutting reporting effort 20%.
+  skills: [FactSet, Excel, Power BI, Tableau, Salesforce, Python, PowerShell, VBA, Power Automate, REST APIs, prompt engineering]
+  motivation: >
+    I want to be the translator between client workflows and AI capability —
+    not a pure developer or a pure support rep. Long term I want to represent
+    the company on the solutions/consulting front at AI conferences.

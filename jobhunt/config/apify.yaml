@@ -1,0 +1,48 @@
+# =====================================================================
+# apify.yaml — searches run through Apify actors (LinkedIn / Indeed / etc).
+#
+# Requires APIFY_TOKEN in your env. Each entry runs one actor with its input.
+# IMPORTANT: every actor has its OWN input schema — the `input` block below
+# must match the schema on that actor's Apify Store page. The examples use the
+# documented inputs for the named actors; if you swap actors, update `input`.
+#
+# Cost note: Apify bills compute per run. Keep `rows`/result caps modest while
+# tuning, and prefer running these less often than the (free) ATS boards.
+#
+# Tailored to early-career, NON-quant, NON-senior-eng roles in your sweet spot.
+# The scoring layer also filters out 5y+/quant/PhD postings, but narrowing the
+# search query first saves Apify compute.
+# =====================================================================
+
+searches:
+  # --- LinkedIn: solutions / enablement track -------------------------------
+  - actor: bebity~linkedin-jobs-scraper
+    label: linkedin-solutions
+    input:
+      title: "solutions consultant OR solutions engineer OR ai enablement OR forward deployed"
+      location: "New York City"
+      experienceLevel: "2"          # 1=intern 2=entry 3=associate 4=mid-senior
+      rows: 50
+      publishedAt: "r604800"        # last 7 days
+
+  - actor: bebity~linkedin-jobs-scraper
+    label: linkedin-analytics-sf
+    input:
+      title: "portfolio analytics OR risk analyst OR performance analyst OR investor relations"
+      location: "San Francisco Bay Area"
+      experienceLevel: "2"
+      rows: 50
+      publishedAt: "r604800"
+
+  # --- Indeed: strategy & ops / fund ops ------------------------------------
+  - actor: misceres~indeed-scraper
+    label: indeed-ops
+    input:
+      position: "strategy and operations OR fund operations OR middle office analyst"
+      country: "US"
+      location: "New York"
+      maxItems: 50
+      parseCompanyDetails: false
+
+# After editing, validate one search cheaply with:
+#   python -m jobhunt.cli apify --only linkedin-solutions --limit 5
