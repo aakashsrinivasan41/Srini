@@ -74,15 +74,30 @@ def cmd_rank(args) -> None:
 
     ranked = rank_jobs(jobs, p) if args.all else shortlist_jobs(jobs, p)
 
-    # staleness filter in BUSINESS days (default last 3; unknown-date kept).
-    max_age = None if args.all_ages else (args.max_age if args.max_age is not None else 3)
-    if max_age is not None:
+    # staleness filter in BUSINESS days. Unknown-date postings are always kept.
+    def _within(jobs, n):
+        return [j for j in jobs
+                if (business_age_days(j.posted_at) is None) or (business_age_days(j.posted_at) <= n)]
+
+    if args.all_ages:
+        pass                                   # show every age
+    elif args.max_age is not None:             # explicit -> strict, no widening
         before = len(ranked)
-        ranked = [j for j in ranked
-                  if (business_age_days(j.posted_at) is None)
-                  or (business_age_days(j.posted_at) <= max_age)]
-        print(f"(age filter: kept {len(ranked)} of {before} within {max_age} business day(s); "
-              f"unknown-date postings kept; --all-ages to disable)")
+        ranked = _within(ranked, args.max_age)
+        print(f"(age filter: kept {len(ranked)} of {before} within {args.max_age} "
+              f"business day(s); unknown-date kept; --all-ages to disable)")
+    else:                                       # default 3, auto-widen if empty
+        before = len(ranked)
+        for w in (3, 5, 10, 20):
+            filtered = _within(ranked, w)
+            if filtered:
+                ranked = filtered
+                extra = "" if w == 3 else f" (auto-widened from 3 — nothing fresher available)"
+                print(f"(age filter: kept {len(ranked)} of {before} within {w} business "
+                      f"day(s){extra}; --max-age N to set your own, --all-ages to disable)")
+                break
+        else:
+            print(f"(age filter: no postings within 20 business days; showing all {before})")
 
     if args.top:
         ranked = ranked[: args.top]
