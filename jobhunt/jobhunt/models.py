@@ -4,6 +4,7 @@ from __future__ import annotations
 import hashlib
 import re
 from dataclasses import dataclass, field, asdict
+from datetime import datetime, timezone
 from pathlib import Path
 from typing import Any, Optional
 
@@ -85,6 +86,70 @@ def normalize_loc(s: str) -> str:
 
 # Detect "$120,000 - $150,000" / "$120k" style ranges anywhere in text.
 _MONEY = re.compile(r"\$\s?(\d{2,3})(?:,(\d{3}))?(?:\.\d+)?\s*([kK])?")
+
+
+def parse_date(s: str) -> Optional[datetime]:
+    """Best-effort parse of the many date shapes the boards emit.
+
+    Handles: ISO 8601 (Greenhouse/Ashby), epoch seconds/millis (Lever),
+    plain dates, and fuzzy 'posted N days/weeks ago' strings (some Apify
+    actors). Returns a tz-aware UTC datetime, or None if unparseable.
+    """
+    if not s:
+        return None
+    s = str(s).strip()
+
+    # epoch (Lever uses millis)
+    if s.isdigit():
+        n = int(s)
+        if n > 1_000_000_000_000:
+            n //= 1000
+        try:
+            return datetime.fromtimestamp(n, tz=timezone.utc)
+        except (ValueError, OSError):
+            return None
+
+    # "3 days ago" / "2 weeks ago" / "today" / "yesterday"
+    rel = s.lower()
+    if "today" in rel or "just posted" in rel or "hour" in rel or "minute" in rel:
+        return datetime.now(timezone.utc)
+    if "yesterday" in rel:
+        return datetime.now(timezone.utc) - _delta(days=1)
+    m = re.search(r"(\d+)\+?\s*(day|week|month)", rel)
+    if m and "ago" in rel:
+        n = int(m.group(1))
+        unit = m.group(2)
+        days = n * {"day": 1, "week": 7, "month": 30}[unit]
+        return datetime.now(timezone.utc) - _delta(days=days)
+
+    # ISO 8601
+    try:
+        d = datetime.fromisoformat(s.replace("Z", "+00:00"))
+        return d if d.tzinfo else d.replace(tzinfo=timezone.utc)
+    except ValueError:
+        pass
+
+    # common explicit formats
+    for fmt in ("%Y-%m-%d", "%Y/%m/%d", "%m/%d/%Y", "%b %d, %Y", "%B %d, %Y", "%d %b %Y"):
+        try:
+            return datetime.strptime(s, fmt).replace(tzinfo=timezone.utc)
+        except ValueError:
+            continue
+    return None
+
+
+def _delta(days: int):
+    from datetime import timedelta
+    return timedelta(days=days)
+
+
+def age_days(s: str) -> Optional[int]:
+    """Days since the posting date, or None if unknown."""
+    d = parse_date(s)
+    if not d:
+        return None
+    days = (datetime.now(timezone.utc) - d).days
+    return max(days, 0)
 
 
 def parse_comp(text: str) -> tuple[Optional[int], Optional[int]]:

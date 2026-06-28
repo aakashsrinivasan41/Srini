@@ -16,8 +16,21 @@ import sys
 from pathlib import Path
 
 from . import aggregate
-from .models import DATA_DIR, load_profile
+from .models import DATA_DIR, load_profile, age_days
 from .score import rank as rank_jobs, shortlist as shortlist_jobs
+
+
+def _age_label(posted_at: str) -> str:
+    d = age_days(posted_at)
+    if d is None:
+        return "?"
+    if d == 0:
+        return "today"
+    if d < 7:
+        return f"{d}d"
+    if d < 30:
+        return f"{d // 7}w"
+    return f"{d // 30}mo"
 
 
 def _load_env() -> None:
@@ -59,25 +72,35 @@ def cmd_rank(args) -> None:
     p = load_profile()
     jobs = aggregate.load()
     ranked = rank_jobs(jobs, p) if args.all else shortlist_jobs(jobs, p)
+
+    # drop stale postings if requested (keep unknown-date ones — can't judge them)
+    if args.max_age:
+        before = len(ranked)
+        ranked = [j for j in ranked
+                  if (age_days(j.posted_at) is None) or (age_days(j.posted_at) <= args.max_age)]
+        print(f"(age filter: kept {len(ranked)} of {before} within {args.max_age} days; "
+              f"unknown-date postings kept)")
+
     if args.top:
         ranked = ranked[: args.top]
 
     # console table
-    print(f"\n{'#':>3}  {'score':>5}  {'company':<16} {'title':<42} {'location':<22}")
-    print("-" * 96)
+    print(f"\n{'#':>3}  {'score':>5}  {'age':>5}  {'company':<16} {'title':<40} {'location':<20}")
+    print("-" * 100)
     for i, j in enumerate(ranked):
-        print(f"{i:>3}  {j.score:>5}  {j.company[:16]:<16} {j.title[:42]:<42} {j.location[:22]:<22}")
+        print(f"{i:>3}  {j.score:>5}  {_age_label(j.posted_at):>5}  "
+              f"{j.company[:16]:<16} {j.title[:40]:<40} {j.location[:20]:<20}")
 
     # csv export
     out = DATA_DIR / "ranked.csv"
     with open(out, "w", newline="", encoding="utf-8") as f:
         w = csv.writer(f)
-        w.writerow(["index", "score", "company", "title", "location", "remote",
-                    "comp_min", "comp_max", "url", "source", "why"])
+        w.writerow(["index", "score", "age", "posted_at", "company", "title", "location",
+                    "remote", "comp_min", "comp_max", "url", "source", "why"])
         for i, j in enumerate(ranked):
             why = " | ".join(f"{k}:{v}" for k, v in j.score_breakdown.items())
-            w.writerow([i, j.score, j.company, j.title, j.location, j.remote,
-                        j.comp_min, j.comp_max, j.url, j.source, why])
+            w.writerow([i, j.score, _age_label(j.posted_at), j.posted_at, j.company, j.title,
+                        j.location, j.remote, j.comp_min, j.comp_max, j.url, j.source, why])
     # persist ranked order so `letter`/`apply`/`open` can resolve an index
     aggregate.save(ranked, DATA_DIR / "ranked.json")
 
@@ -155,6 +178,8 @@ def main(argv=None) -> None:
     r.add_argument("--top", type=int, help="show only top N")
     r.add_argument("--all", action="store_true", help="show all (not just shortlist)")
     r.add_argument("--open", action="store_true", help="open the clickable HTML list in your browser")
+    r.add_argument("--max-age", type=int, metavar="DAYS",
+                   help="hide postings older than DAYS (unknown-date postings are kept)")
     r.set_defaults(func=cmd_rank)
 
     o = sub.add_parser("open", help="open a ranked job's application page in your browser")

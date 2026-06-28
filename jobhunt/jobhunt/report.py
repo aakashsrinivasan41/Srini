@@ -4,7 +4,26 @@ from __future__ import annotations
 import html
 from pathlib import Path
 
-from .models import Job, DATA_DIR
+from .models import Job, DATA_DIR, age_days
+
+
+def _age_cell(j: Job) -> tuple[str, str]:
+    """Return (label, color) for a posting's age."""
+    d = age_days(j.posted_at)
+    if d is None:
+        return "?", "#9ca3af"
+    if d == 0:
+        label = "today"
+    elif d == 1:
+        label = "1d ago"
+    elif d < 7:
+        label = f"{d}d ago"
+    elif d < 30:
+        label = f"{d // 7}w ago"
+    else:
+        label = f"{d // 30}mo ago"
+    color = "#16a34a" if d <= 7 else "#ca8a04" if d <= 21 else "#dc2626"
+    return label, color
 
 
 def _score_color(s: float) -> str:
@@ -33,6 +52,7 @@ def write_html(jobs: list[Job], path: Path | None = None, title: str = "jobhunt 
         link = (f'<a href="{html.escape(j.url)}" target="_blank" rel="noopener">'
                 f'{html.escape(j.title)} ↗</a>') if j.url else html.escape(j.title)
         remote = "🏠 remote" if j.remote else ""
+        age_label, age_color = _age_cell(j)
         rows.append(f"""
         <tr title="{html.escape(why)}">
           <td class="idx">{i}</td>
@@ -42,6 +62,7 @@ def write_html(jobs: list[Job], path: Path | None = None, title: str = "jobhunt 
           <td>{html.escape(j.location)}</td>
           <td>{remote}</td>
           <td>{_comp(j)}</td>
+          <td style="color:{age_color};font-weight:600;white-space:nowrap">{age_label}</td>
           <td class="src">{html.escape(j.source)}</td>
         </tr>""")
 
@@ -72,7 +93,7 @@ def write_html(jobs: list[Job], path: Path | None = None, title: str = "jobhunt 
   <table>
     <thead><tr>
       <th>#</th><th>Score</th><th>Company</th><th>Title</th>
-      <th>Location</th><th></th><th>Comp</th><th>Source</th>
+      <th>Location</th><th></th><th>Comp</th><th>Posted</th><th>Source</th>
     </tr></thead>
     <tbody>{''.join(rows)}</tbody>
   </table>
