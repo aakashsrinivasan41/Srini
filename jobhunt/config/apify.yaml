@@ -1,48 +1,68 @@
 # =====================================================================
-# apify.yaml — searches run through Apify actors (LinkedIn / Indeed / etc).
+# apify.yaml — whole-market searches via Apify (Indeed).
 #
-# Requires APIFY_TOKEN in your env. Each entry runs one actor with its input.
-# IMPORTANT: every actor has its OWN input schema — the `input` block below
-# must match the schema on that actor's Apify Store page. The examples use the
-# documented inputs for the named actors; if you swap actors, update `input`.
+# Requires APIFY_TOKEN in your env. The Indeed actor (misceres/indeed-scraper)
+# is free / pay-per-use, so these run on the free tier. LinkedIn scrapers on
+# Apify are PAID "rental" actors (403 on free accounts) — left out on purpose.
 #
-# Cost note: Apify bills compute per run. Keep `rows`/result caps modest while
-# tuning, and prefer running these less often than the (free) ATS boards.
+# Each search hits one of your target role families across the whole US. The
+# scoring layer (role gate + US filter + experience guardrail) then ranks and
+# trims, so casting a broad net here is fine.
 #
-# Tailored to early-career, NON-quant, NON-senior-eng roles in your sweet spot.
-# The scoring layer also filters out 5y+/quant/PhD postings, but narrowing the
-# search query first saves Apify compute.
+# Cost note: maxItems caps results per search. Keep it modest. Run with
+#   python -m jobhunt.cli apify              (all searches)
+#   python -m jobhunt.cli apify --only indeed-solutions --limit 5   (test one)
 # =====================================================================
 
 searches:
-  # --- LinkedIn: solutions / enablement track -------------------------------
-  - actor: bebity~linkedin-jobs-scraper
-    label: linkedin-solutions
-    input:
-      title: "solutions consultant OR solutions engineer OR ai enablement OR forward deployed"
-      location: "New York City"
-      experienceLevel: "2"          # 1=intern 2=entry 3=associate 4=mid-senior
-      rows: 50
-      publishedAt: "r604800"        # last 7 days
-
-  - actor: bebity~linkedin-jobs-scraper
-    label: linkedin-analytics-sf
-    input:
-      title: "portfolio analytics OR risk analyst OR performance analyst OR investor relations"
-      location: "San Francisco Bay Area"
-      experienceLevel: "2"
-      rows: 50
-      publishedAt: "r604800"
-
-  # --- Indeed: strategy & ops / fund ops ------------------------------------
+  # --- AI solutions / enablement / implementation (your #1 track) -----------
   - actor: misceres~indeed-scraper
-    label: indeed-ops
+    label: indeed-solutions
     input:
-      position: "strategy and operations OR fund operations OR middle office analyst"
+      position: "solutions consultant"
+      location: "United States"
       country: "US"
-      location: "New York"
       maxItems: 50
       parseCompanyDetails: false
 
-# After editing, validate one search cheaply with:
-#   python -m jobhunt.cli apify --only linkedin-solutions --limit 5
+  - actor: misceres~indeed-scraper
+    label: indeed-implementation
+    input:
+      position: "implementation consultant"
+      location: "United States"
+      country: "US"
+      maxItems: 50
+      parseCompanyDetails: false
+
+  # --- portfolio analytics / risk / performance ----------------------------
+  - actor: misceres~indeed-scraper
+    label: indeed-analytics
+    input:
+      position: "portfolio analyst risk analytics"
+      location: "United States"
+      country: "US"
+      maxItems: 50
+      parseCompanyDetails: false
+
+  # --- strategy & ops / business ops ---------------------------------------
+  - actor: misceres~indeed-scraper
+    label: indeed-strategy-ops
+    input:
+      position: "strategy and operations"
+      location: "United States"
+      country: "US"
+      maxItems: 50
+      parseCompanyDetails: false
+
+  # --- investor relations / capital markets / fund ops ---------------------
+  - actor: misceres~indeed-scraper
+    label: indeed-ir-markets
+    input:
+      position: "investor relations capital markets"
+      location: "United States"
+      country: "US"
+      maxItems: 50
+      parseCompanyDetails: false
+
+# To add LinkedIn later, subscribe to a rental actor in the Apify Store and add
+# it here with its own input schema (check the actor's page for field names).
