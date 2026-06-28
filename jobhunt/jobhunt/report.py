@@ -4,25 +4,16 @@ from __future__ import annotations
 import html
 from pathlib import Path
 
-from .models import Job, DATA_DIR, age_days
+from .models import Job, DATA_DIR, business_age_days
 
 
 def _age_cell(j: Job) -> tuple[str, str]:
-    """Return (label, color) for a posting's age."""
-    d = age_days(j.posted_at)
+    """Return (label, color) for a posting's BUSINESS-day age."""
+    d = business_age_days(j.posted_at)
     if d is None:
         return "?", "#9ca3af"
-    if d == 0:
-        label = "today"
-    elif d == 1:
-        label = "1d ago"
-    elif d < 7:
-        label = f"{d}d ago"
-    elif d < 30:
-        label = f"{d // 7}w ago"
-    else:
-        label = f"{d // 30}mo ago"
-    color = "#16a34a" if d <= 7 else "#ca8a04" if d <= 21 else "#dc2626"
+    label = f"{d}D"
+    color = "#16a34a" if d <= 3 else "#ca8a04" if d <= 5 else "#dc2626"
     return label, color
 
 

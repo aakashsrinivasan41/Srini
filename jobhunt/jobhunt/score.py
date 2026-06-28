@@ -120,6 +120,18 @@ def score_job(job: Job, p: dict) -> Job:
         total *= 0.4
         a_why += " (below onsite comp floor)"
 
+    # ROLE GATE: a job that doesn't actually match a target role must not be
+    # rescued by comp/location/remote. Title match = full; description-only =
+    # discounted; no real match = crushed below the cutoff.
+    if r >= 0.9:
+        role_gate, gate_why = 1.0, ""
+    elif r >= 0.4:                       # matched only in the description
+        role_gate, gate_why = 0.7, " (role only in description)"
+    else:                                # weak/no role match
+        role_gate, gate_why = 0.22, " (off-target role)"
+    total *= role_gate
+    r_why += gate_why
+
     # experience-fit guardrail: kill 5y+/quant/senior-eng, nudge early-career
     exp_mult, exp_why = experience_fit(job.description, job.title, p)
     total *= exp_mult

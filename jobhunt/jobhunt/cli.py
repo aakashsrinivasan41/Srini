@@ -16,21 +16,14 @@ import sys
 from pathlib import Path
 
 from . import aggregate
-from .models import DATA_DIR, load_profile, age_days
+from .models import DATA_DIR, load_profile, business_age_days, is_us
 from .score import rank as rank_jobs, shortlist as shortlist_jobs
 
 
 def _age_label(posted_at: str) -> str:
-    d = age_days(posted_at)
-    if d is None:
-        return "?"
-    if d == 0:
-        return "today"
-    if d < 7:
-        return f"{d}d"
-    if d < 30:
-        return f"{d // 7}w"
-    return f"{d // 30}mo"
+    """Business-day age, e.g. '0D', '1D', '?' if unknown."""
+    d = business_age_days(posted_at)
+    return "?" if d is None else f"{d}D"
 
 
 def _load_env() -> None:
@@ -71,15 +64,25 @@ def cmd_all(_args) -> None:
 def cmd_rank(args) -> None:
     p = load_profile()
     jobs = aggregate.load()
+
+    # US-only by default (drop London/Singapore/EMEA/etc.); --global to keep all
+    if not args.glob:
+        before = len(jobs)
+        jobs = [j for j in jobs if is_us(j.location)]
+        if before != len(jobs):
+            print(f"(US-only: kept {len(jobs)} of {before}; pass --global to include non-US)")
+
     ranked = rank_jobs(jobs, p) if args.all else shortlist_jobs(jobs, p)
 
-    # drop stale postings if requested (keep unknown-date ones — can't judge them)
-    if args.max_age:
+    # staleness filter in BUSINESS days (default last 3; unknown-date kept).
+    max_age = None if args.all_ages else (args.max_age if args.max_age is not None else 3)
+    if max_age is not None:
         before = len(ranked)
         ranked = [j for j in ranked
-                  if (age_days(j.posted_at) is None) or (age_days(j.posted_at) <= args.max_age)]
-        print(f"(age filter: kept {len(ranked)} of {before} within {args.max_age} days; "
-              f"unknown-date postings kept)")
+                  if (business_age_days(j.posted_at) is None)
+                  or (business_age_days(j.posted_at) <= max_age)]
+        print(f"(age filter: kept {len(ranked)} of {before} within {max_age} business day(s); "
+              f"unknown-date postings kept; --all-ages to disable)")
 
     if args.top:
         ranked = ranked[: args.top]
@@ -178,8 +181,11 @@ def main(argv=None) -> None:
     r.add_argument("--top", type=int, help="show only top N")
     r.add_argument("--all", action="store_true", help="show all (not just shortlist)")
     r.add_argument("--open", action="store_true", help="open the clickable HTML list in your browser")
-    r.add_argument("--max-age", type=int, metavar="DAYS",
-                   help="hide postings older than DAYS (unknown-date postings are kept)")
+    r.add_argument("--max-age", type=int, metavar="BDAYS",
+                   help="hide postings older than N business days (default 3; weekends roll forward)")
+    r.add_argument("--all-ages", action="store_true", help="disable the staleness filter, show every age")
+    r.add_argument("--global", dest="glob", action="store_true",
+                   help="include non-US postings (default is US-only)")
     r.set_defaults(func=cmd_rank)
 
     o = sub.add_parser("open", help="open a ranked job's application page in your browser")

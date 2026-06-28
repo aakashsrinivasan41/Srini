@@ -144,12 +144,91 @@ def _delta(days: int):
 
 
 def age_days(s: str) -> Optional[int]:
-    """Days since the posting date, or None if unknown."""
+    """Calendar days since the posting date, or None if unknown."""
     d = parse_date(s)
     if not d:
         return None
     days = (datetime.now(timezone.utc) - d).days
     return max(days, 0)
+
+
+def _roll_forward_to_weekday(d):
+    """Sat/Sun -> the following Monday; weekdays unchanged."""
+    from datetime import timedelta
+    wd = d.weekday()          # Mon=0 .. Sun=6
+    if wd >= 5:               # Sat(5)/Sun(6)
+        return d + timedelta(days=7 - wd)
+    return d
+
+
+def business_age_days(s: str) -> Optional[int]:
+    """Business-day age with weekend roll-forward.
+
+    Weekends collapse onto the next Monday for BOTH the posting date and today,
+    so a Sat/Sun posting is never older than the most recent weekday and never
+    slips past a recent-days filter. Examples (verified):
+      today SUN: posted today/Sat -> 0, Fri -> 1, Thu -> 2
+      today MON: posted today/Sun/Sat -> 0, Fri -> 1, Thu -> 2
+    Returns None if the posting date is unknown.
+    """
+    from datetime import timedelta
+    d = parse_date(s)
+    if not d:
+        return None
+    post = (d.astimezone() if d.tzinfo else d).date()
+    today = datetime.now().date()
+    if post > today:
+        post = today
+    mpost = _roll_forward_to_weekday(post)
+    mtoday = _roll_forward_to_weekday(today)
+    if mtoday <= mpost:
+        return 0
+    count = 0
+    for i in range(1, (mtoday - mpost).days + 1):
+        if (mpost + timedelta(days=i)).weekday() < 5:
+            count += 1
+    return count
+
+
+# --- US-only geography filter ----------------------------------------------
+_FOREIGN = [
+    "united kingdom", "london", " u.k", "(uk)", "england", "scotland", "ireland", "dublin",
+    "singapore", "australia", "sydney", "melbourne", "new zealand", "canada", "toronto",
+    "vancouver", "ontario", "british columbia", "montreal", "quebec", "germany", "berlin",
+    "munich", "france", "paris", "netherlands", "amsterdam", "spain", "madrid", "barcelona",
+    "sweden", "stockholm", "norway", "denmark", "copenhagen", "finland", "poland", "warsaw",
+    "switzerland", "zurich", "geneva", "israel", "tel aviv", "india", "bangalore", "bengaluru",
+    "mumbai", "hyderabad", "japan", "tokyo", "korea", "seoul", "china", "hong kong", "taiwan",
+    "brazil", "sao paulo", "mexico", "argentina", "cyprus", "uae", "dubai", "abu dhabi",
+    "emea", "apac", "latam", "philippines", "manila", "indonesia", "jakarta", "portugal",
+    "lisbon", "italy", "rome", "milan", "belgium", "brussels", "austria", "vienna", "czech",
+    "prague", "romania", "bucharest", "south africa", "nigeria", "kenya", "egypt", "turkey",
+    "istanbul", "greece", "athens", "ukraine", "colombia", "chile", "malaysia", "thailand",
+    "bangkok", "vietnam", "saudi", "qatar",
+]
+_US_MARKERS = [
+    "united states", "usa", "u.s.", "remote - us", "remote-us", "remote, us", "u.s ",
+    "nyc", "new york", "san francisco", "seattle", "boston", "austin", "chicago", "los angeles",
+    "denver", "atlanta", "washington", "foster city", "bay area", "san mateo", "palo alto",
+    "mountain view", "menlo park", "salt lake city", "miami", "dallas", "houston", "san jose",
+    "sunnyvale", "santa clara", "cupertino", "redwood city", "oakland", "berkeley", "brooklyn",
+    "manhattan", "nashville", "phoenix", "san diego", "portland", "philadelphia", "charlotte",
+    "raleigh", "columbus", "detroit", "minneapolis", "st. louis", "kansas city", "las vegas",
+]
+
+
+def is_us(location: str) -> bool:
+    """True if the location is (or plausibly is) US-based.
+
+    Drops a posting only when a foreign marker is present AND no US marker is —
+    so multi-city US listings ('SF | NYC | London') and bare 'Remote' are kept.
+    """
+    loc = (location or "").lower()
+    if not loc:
+        return True
+    has_foreign = any(m in loc for m in _FOREIGN)
+    has_us = any(m in loc for m in _US_MARKERS)
+    return not (has_foreign and not has_us)
 
 
 def parse_comp(text: str) -> tuple[Optional[int], Optional[int]]:

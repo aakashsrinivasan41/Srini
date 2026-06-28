@@ -33,16 +33,28 @@ roles:
   # A job title scores well if it matches any of these (case-insensitive substring).
   include:
     - solutions consultant
+    - solution consultant
     - solutions engineer
+    - solution engineer
+    - solutions architect
+    - solution architect
     - forward deployed
+    - forward-deployed
     - ai enablement
     - ai solutions
-    - implementation
-    - solutions architect
+    - ai implementation
+    - implementation consultant
+    - implementation manager
+    - implementation specialist
+    - deployment strategist
+    - solutions strategist
     - portfolio analytics
+    - portfolio analyst
     - risk analyst
     - performance analyst
+    - performance analytics
     - investment analyst
+    - investment operations
     - middle office
     - fund operations
     - fund accounting
@@ -50,10 +62,15 @@ roles:
     - strategy & operations
     - strategy and operations
     - business operations
+    - revenue operations
     - product operations
+    - sales operations
     - capital markets
     - customer success engineer
+    - customer success manager
     - technical account manager
+    - technical account
+    - sales engineer
   # Hard kill-switch: drop the job entirely if title matches any of these.
   # NOTE: "solutions engineer" / "forward deployed" stay in `include` above and
   # are NOT killed by these — only pure-dev/hardware/research eng titles are.
@@ -80,6 +97,32 @@ roles:
     - " vp"
     - head of
     - chief
+    # recurring high-comp noise that isn't your target track
+    - account executive
+    - sales development
+    - business development representative
+    - partner development
+    - recruiter
+    - recruiting coordinator
+    - sourcer
+    - payroll
+    - concierge
+    - counsel
+    - attorney
+    - paralegal
+    - data scientist
+    - research scientist
+    - research manager
+    - research engineer
+    - post-training
+    - designer
+    - technician
+    - editor
+    - copywriter
+    - accountant
+    - bookkeeper
+    - android
+    - ios engineer
   # Seniority you'll consider (substring match against title; empty = any).
   seniority_ok:
     - analyst
