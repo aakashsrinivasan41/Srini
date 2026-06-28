@@ -78,9 +78,21 @@ def cmd_rank(args) -> None:
             why = " | ".join(f"{k}:{v}" for k, v in j.score_breakdown.items())
             w.writerow([i, j.score, j.company, j.title, j.location, j.remote,
                         j.comp_min, j.comp_max, j.url, j.source, why])
-    # persist ranked order so `letter`/`apply` can resolve an index
+    # persist ranked order so `letter`/`apply`/`open` can resolve an index
     aggregate.save(ranked, DATA_DIR / "ranked.json")
-    print(f"\n{len(ranked)} jobs -> {out}  (and ranked.json for letter/apply)")
+
+    # clickable HTML page
+    from .report import write_html
+    html_path = write_html(ranked)
+    print(f"\n{len(ranked)} jobs -> {out}")
+    print(f"Clickable list -> {html_path}")
+    if args.open:
+        import webbrowser
+        webbrowser.open(f"file://{html_path.resolve()}")
+        print("Opened in your browser.")
+    else:
+        print("Tip: add --open to pop the clickable list in your browser,")
+        print("     or `python -m jobhunt.cli open <#>` to jump straight to one job.")
 
 
 def cmd_discover(args) -> None:
@@ -96,6 +108,15 @@ def _ranked_job(index: int):
     if not 0 <= index < len(jobs):
         sys.exit(f"Index {index} out of range (0..{len(jobs)-1}).")
     return jobs[index]
+
+
+def cmd_open(args) -> None:
+    import webbrowser
+    job = _ranked_job(args.index)
+    if not job.url:
+        sys.exit(f"#{args.index} ({job.title}) has no URL on record.")
+    print(f"Opening #{args.index}: {job.title} @ {job.company}\n  {job.url}")
+    webbrowser.open(job.url)
 
 
 def cmd_letter(args) -> None:
@@ -133,7 +154,12 @@ def main(argv=None) -> None:
     r = sub.add_parser("rank", help="score jobs and print shortlist")
     r.add_argument("--top", type=int, help="show only top N")
     r.add_argument("--all", action="store_true", help="show all (not just shortlist)")
+    r.add_argument("--open", action="store_true", help="open the clickable HTML list in your browser")
     r.set_defaults(func=cmd_rank)
+
+    o = sub.add_parser("open", help="open a ranked job's application page in your browser")
+    o.add_argument("index", type=int)
+    o.set_defaults(func=cmd_open)
 
     d = sub.add_parser("discover", help="find a company's ATS + slug")
     d.add_argument("company")
