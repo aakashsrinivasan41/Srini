@@ -55,16 +55,29 @@ roles:
     - customer success engineer
     - technical account manager
   # Hard kill-switch: drop the job entirely if title matches any of these.
+  # NOTE: "solutions engineer" / "forward deployed" stay in `include` above and
+  # are NOT killed by these — only pure-dev/hardware/research eng titles are.
   exclude:
     - portfolio manager
-    - senior software engineer
-    - staff engineer
-    - principal engineer
+    - software engineer        # kills pure-dev + eng-heavy FDE-SWE roles
+    - data engineer
+    - machine learning engineer
+    - ml engineer
+    - research engineer
+    - infrastructure engineer
+    - platform engineer
+    - security engineer
+    - hardware engineer
+    - rtl
+    - firmware
+    - devops
+    - staff
+    - principal
     - intern
     - internship
     - director
     - vice president
-    - vp,
+    - " vp"
     - head of
     - chief
   # Seniority you'll consider (substring match against title; empty = any).
