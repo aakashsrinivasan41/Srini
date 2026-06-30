@@ -30,47 +30,93 @@ work_authorization:
 # What you're looking for. Drives the ROLE component of the score.
 # ---------------------------------------------------------------------
 roles:
-  # A job title scores well if it matches any of these (case-insensitive substring).
-  include:
+  # PRIMARY — what you actually want most. Title match here scores full role
+  # weight. AI-hybrid + fund ops/mgmt + bank functions + analytics/strategy.
+  primary:
+    - ai solutions
+    - ai strategy
+    - ai enablement
+    - ai implementation
+    - ai operations
+    - ai program
+    - applied ai
+    - generative ai
+    - ai consultant
+    - ai specialist
+    # fund / asset management / investment operations
+    - fund operations
+    - fund accounting
+    - fund administration
+    - fund services
+    - fund management
+    - asset management
+    - investment operations
+    - investment analyst
+    - portfolio operations
+    - portfolio analytics
+    - portfolio analyst
+    - performance analyst
+    - performance analytics
+    - middle office
+    - investor relations
+    - capital markets
+    # bank functions (NOT investment banking) — ops/strategy/consulting/perf
+    - bank operations
+    - banking operations
+    - bank strategy
+    - banking strategy
+    - banking consultant
+    - financial services consultant
+    - treasury operations
+    - financial operations
+    - wealth management
+    # strategy / ops / analytics
+    - strategy & operations
+    - strategy and operations
+    - business operations
+    - revenue operations
+    - operations analyst
+    - operations associate
+    - strategy analyst
+    - strategy associate
+    - risk analyst
+    - product operations
+    - sales operations
+  # SECONDARY — fine, but NOT your focus. Scored lower so these only float up
+  # when they're strong on everything else (comp, company, freshness). Covers
+  # the customer-success / implementation / pure-solutions-eng cluster.
+  secondary:
     - solutions consultant
     - solution consultant
     - solutions engineer
     - solution engineer
     - solutions architect
     - solution architect
+    - solutions strategist
     - forward deployed
     - forward-deployed
-    - ai enablement
-    - ai solutions
-    - ai implementation
     - implementation consultant
     - implementation manager
     - implementation specialist
     - deployment strategist
-    - solutions strategist
-    - portfolio analytics
-    - portfolio analyst
-    - risk analyst
-    - performance analyst
-    - performance analytics
-    - investment analyst
-    - investment operations
-    - middle office
-    - fund operations
-    - fund accounting
-    - investor relations
-    - strategy & operations
-    - strategy and operations
-    - business operations
-    - revenue operations
-    - product operations
-    - sales operations
-    - capital markets
     - customer success engineer
     - customer success manager
+    - customer success
     - technical account manager
     - technical account
     - sales engineer
+  # Title seniority penalty (NOT a hard cut): you're ~2 yrs, so over-level
+  # titles get knocked down even when there's no description to read years from.
+  senior_penalty_terms:
+    - senior
+    - "sr."
+    - "sr "
+    - lead
+    - manager
+    - " mgr"
+    - " ii"
+    - " iii"
+    - " iv"
   # Hard kill-switch: drop the job entirely if title matches any of these.
   # NOTE: "solutions engineer" / "forward deployed" stay in `include` above and
   # are NOT killed by these — only pure-dev/hardware/research eng titles are.
@@ -157,10 +203,14 @@ locations:
 # Thresholds are annual USD base (or stated range midpoint).
 # ---------------------------------------------------------------------
 compensation:
+  # Realistic floors for your level + desired bank/fund-ops roles (which pay
+  # ~$95-120k entry). Set lower than your "dream" numbers on purpose: a hard
+  # $125k floor was cutting the very bank/fund roles you asked for. Roles below
+  # these get a soft penalty; only clearly-underpaid (<80% of floor) get sunk.
   min_by_location:
-    new_york: 125000
-    sf_bay: 100000
-    other: 110000
+    new_york: 105000
+    sf_bay: 95000
+    other: 90000
   # On-site full-time (4-5 days/wk) is only acceptable at/above this number,
   # regardless of city.
   onsite_floor: 125000

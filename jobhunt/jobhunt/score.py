@@ -23,17 +23,26 @@ def _contains_any(text: str, needles: list[str]) -> str | None:
 
 
 def _role_component(job: Job, p: dict) -> tuple[float, str]:
+    """Primary roles (your focus) score full; secondary (CS/impl/sol-eng) score
+    lower so they only surface when strong on everything else."""
     roles = p["roles"]
     title = job.title.lower()
     if _contains_any(title, roles.get("exclude", [])):
         return 0.0, "excluded title"
-    hit = _contains_any(title, roles.get("include", []))
+    hit = _contains_any(title, roles.get("primary", []))
     if hit:
-        return 1.0, f"role match: '{hit}'"
-    # soft credit: description mentions a target role even if title doesn't
-    if job.description and _contains_any(job.description[:1500], roles.get("include", [])):
-        return 0.45, "role in description only"
-    return 0.15, "weak role match"
+        return 1.0, f"primary: '{hit}'"
+    hit = _contains_any(title, roles.get("secondary", []))
+    if hit:
+        return 0.6, f"secondary: '{hit}' (not your focus)"
+    desc = job.description[:1500] if job.description else ""
+    if desc:
+        hp = _contains_any(desc, roles.get("primary", []))
+        if hp:
+            return 0.5, f"primary in description: '{hp}'"
+        if _contains_any(desc, roles.get("secondary", [])):
+            return 0.32, "secondary in description"
+    return 0.12, "off-target role"
 
 
 def _location_component(job: Job, p: dict) -> tuple[float, str]:
@@ -115,41 +124,41 @@ def score_job(job: Job, p: dict) -> Job:
     total = (w["role"] * r + w["location"] * l + w["comp"] * c +
              w["arrangement"] * a + w["company"] * comp_score)
 
-    # onsite-below-floor is a near-disqualifier per your rules
-    if onsite_gated:
-        total *= 0.4
-        a_why += " (below onsite comp floor)"
+    # (The old onsite-comp gate was removed — it double-penalized the onsite
+    #  bank/fund-ops roles you actually want. Onsite is already reflected in the
+    #  arrangement component, and underpay is handled by the comp gate below.)
+    _ = onsite_gated  # kept for breakdown wording only
 
-    # ROLE GATE: a job that doesn't actually match a target role must not be
-    # rescued by comp/location/remote. Title match = full; description-only =
-    # discounted; no real match = crushed below the cutoff.
-    if r >= 0.9:
-        role_gate, gate_why = 1.0, ""
-    elif r >= 0.4:                       # matched only in the description
-        role_gate, gate_why = 0.7, " (role only in description)"
-    else:                                # weak/no role match
-        role_gate, gate_why = 0.22, " (off-target role)"
-    total *= role_gate
-    r_why += gate_why
+    # ROLE GATE: an off-target role must not be rescued by comp/location/remote.
+    # Primary/secondary tiers already differ in role weight; here we only crush
+    # the genuinely off-target tail so it falls below the cutoff.
+    if r < 0.25:
+        total *= 0.22
+        r_why += " (off-target)"
 
-    # COMP GATE: stated pay clearly below your floor for that location is a
-    # near-disqualifier (e.g. an $85k role in NYC where your floor is $125k).
+    # SENIORITY PENALTY: you're ~2 yrs, so over-level titles (Senior/Lead/
+    # Manager/level II+) get knocked down even with no description to read.
+    if _contains_any(job.title.lower(), p["roles"].get("senior_penalty_terms", [])):
+        total *= 0.5
+        r_why += " [senior-title penalty]"
+
+    # COMP GATE: penalize only CLEARLY-underpaid roles (e.g. an $85k media job in
+    # NYC), while letting realistic bank/fund-ops pay (~$95-120k) through. Tuned
+    # so ratio<0.8 sinks below the cutoff but 0.8-0.95 is only a soft nudge.
     # Unknown comp is NOT gated — many strong roles just don't post a number.
     if job.comp_min:
         floor = _comp_floor(job, p)
         mid = (job.comp_min + (job.comp_max or job.comp_min)) / 2
         ratio = (mid / floor) if floor else 1.0
         if ratio < 0.8:
-            comp_gate = 0.40
-        elif ratio < 0.9:
-            comp_gate = 0.65
-        elif ratio < 1.0:
-            comp_gate = 0.85
+            comp_gate = 0.50
+        elif ratio < 0.95:
+            comp_gate = 0.80
         else:
             comp_gate = 1.0
         total *= comp_gate
         if comp_gate < 1.0:
-            c_why += f" — GATED ${int(mid/1000)}k < floor ${int(floor/1000)}k"
+            c_why += f" — low vs floor ${int(floor/1000)}k"
 
     # experience-fit guardrail: kill 4y+/quant/senior-eng/manager, nudge early-career
     exp_mult, exp_why = experience_fit(job.description, job.title, p)

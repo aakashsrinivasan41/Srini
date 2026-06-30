@@ -14,6 +14,13 @@ import re
 # MAX lower-bound across all experience mentions, so a role asking "4+ yrs total
 # incl. 2+ yrs presales" is read as 4 (the binding requirement), while a single
 # "2-5 yrs" range is read as 2 (you're in range -> keep).
+# Any "7+ years" or "5-7 years" / "2–5+ years" — a '+' or a range is a strong
+# experience signal regardless of the word that follows ("years in", "years of
+# product ops", etc). group(1) is the LOWER bound of a range.
+_YEARS_PLUSRANGE = re.compile(
+    r"(\d{1,2})\s*(?:[-–—]\s*\d{1,2}\s*\+?|\+)\s*years?", re.IGNORECASE
+)
+# "N years ... experience" (number, then 'experience' within a few words)
 _YEARS_EXP = re.compile(
     r"(\d{1,2})\s*(?:[-–—]\s*\d{1,2})?\s*\+?\s*(?:or more\s*)?years?(?:\s+of)?"
     r"(?:\s+\w+){0,3}?\s+experience",
@@ -29,10 +36,12 @@ def _max_required_years(text: str) -> int | None:
     """Highest binding years-of-experience requirement, or None.
 
     group(1) is always the lower bound of a range (or the bare number), so a
-    "2-5 years" range contributes 2, not 5.
+    "2-5 years" range contributes 2, not 5, while "7+ years in X" contributes 7.
+    A plain "3 years" with no '+', range, or the word 'experience' is ignored
+    (avoids matching things like 'over the past 3 years').
     """
     found: list[int] = []
-    for pat in (_YEARS_EXP, _YEARS_LOOSE):
+    for pat in (_YEARS_PLUSRANGE, _YEARS_EXP, _YEARS_LOOSE):
         for m in pat.finditer(text):
             n = int(m.group(1))
             if 0 <= n <= 30:
