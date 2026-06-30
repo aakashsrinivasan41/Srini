@@ -84,6 +84,23 @@ def cmd_rank(args) -> None:
         if before != len(jobs):
             print(f"(US-only: kept {len(jobs)} of {before}; pass --global to include non-US)")
 
+    # ENRICH: fetch full salary/description for the title-strongest LinkedIn
+    # candidates so the comp/experience gates can act on what the card hid.
+    if args.enrich:
+        from .enrich import enrich_jobs
+        pre = rank_jobs(jobs, p)                       # cheap pre-rank to pick candidates
+        enrich_jobs(pre, limit=args.enrich)            # mutates Job objects in place
+        # persist enriched data back into jobs.json so future runs reuse it
+        try:
+            full = aggregate.load()
+            by_fp = {j.fingerprint: j for j in jobs}
+            for i, fj in enumerate(full):
+                if fj.fingerprint in by_fp:
+                    full[i] = by_fp[fj.fingerprint]
+            aggregate.save(full)
+        except Exception:  # noqa: BLE001
+            pass
+
     ranked = rank_jobs(jobs, p) if args.all else shortlist_jobs(jobs, p)
 
     # staleness filter in BUSINESS days. Unknown-date postings are always kept.
@@ -220,6 +237,9 @@ def main(argv=None) -> None:
     r.add_argument("--all-ages", action="store_true", help="disable the staleness filter, show every age")
     r.add_argument("--global", dest="glob", action="store_true",
                    help="include non-US postings (default is US-only)")
+    r.add_argument("--enrich", type=int, nargs="?", const=40, metavar="N", default=0,
+                   help="fetch full salary/description for the top N LinkedIn candidates "
+                        "(default 40) so pay/experience filters apply; slower, may throttle")
     r.set_defaults(func=cmd_rank)
 
     o = sub.add_parser("open", help="open a ranked job's application page in your browser")
