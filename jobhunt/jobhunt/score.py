@@ -132,7 +132,26 @@ def score_job(job: Job, p: dict) -> Job:
     total *= role_gate
     r_why += gate_why
 
-    # experience-fit guardrail: kill 5y+/quant/senior-eng, nudge early-career
+    # COMP GATE: stated pay clearly below your floor for that location is a
+    # near-disqualifier (e.g. an $85k role in NYC where your floor is $125k).
+    # Unknown comp is NOT gated — many strong roles just don't post a number.
+    if job.comp_min:
+        floor = _comp_floor(job, p)
+        mid = (job.comp_min + (job.comp_max or job.comp_min)) / 2
+        ratio = (mid / floor) if floor else 1.0
+        if ratio < 0.8:
+            comp_gate = 0.40
+        elif ratio < 0.9:
+            comp_gate = 0.65
+        elif ratio < 1.0:
+            comp_gate = 0.85
+        else:
+            comp_gate = 1.0
+        total *= comp_gate
+        if comp_gate < 1.0:
+            c_why += f" — GATED ${int(mid/1000)}k < floor ${int(floor/1000)}k"
+
+    # experience-fit guardrail: kill 4y+/quant/senior-eng/manager, nudge early-career
     exp_mult, exp_why = experience_fit(job.description, job.title, p)
     total *= exp_mult
 

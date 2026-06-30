@@ -212,10 +212,12 @@ shortlist_threshold: 55
 # ---------------------------------------------------------------------
 experience:
   my_years: 2                 # current full-time YOE (used for messaging)
-  # Drop a job if its description demands MORE than this many years.
-  max_required_years: 4
-  # If years can't be parsed but these "over-qualified" signals appear,
-  # heavily penalize (not auto-drop, since wording varies).
+  # Drop a job if its (lower-bound) experience requirement exceeds this. Set to
+  # 3 so 4y+ roles drop but "2-3 yr" / "3+ yr" stretch roles still come through.
+  max_required_years: 3
+  # If years can't be parsed but these signals appear, heavily penalize. Covers
+  # quant/senior-eng AND people-manager / advanced-degree-REQUIRED roles (a
+  # *preference* for a Master's/MBA is fine and not listed here).
   overqualified_signals:
     - "senior software engineer"
     - "staff engineer"
@@ -227,13 +229,26 @@ experience:
     - "quantitative developer"
     - "c++"
     - "deep learning research"
-    - "10+ years"
-    - "8+ years"
-    - "7+ years"
-    - "6+ years"
-    - "5+ years"
-    - "minimum of 5 years"
-    - "at least 5 years"
+    # people-management / senior-leadership signals (you're an IC, not a manager)
+    - "lead teams"
+    - "lead a team"
+    - "manage a team"
+    - "managing a team"
+    - "people management"
+    - "mentor junior"
+    - "mentoring junior"
+    - "managing performance"
+    - "coaching and mentoring team"
+    - "direct reports"
+    # advanced degree REQUIRED (not merely preferred)
+    - "master's degree required"
+    - "master's required"
+    - "mba required"
+    - "advanced degree required"
+    - "phd required"
+    # NOTE: numeric tenure ("5+ years", "2-5 years") is handled by the
+    # range-aware parser in experience.py, NOT string-matched here — matching
+    # "5+ years" literally would wrongly cut a good "2-5+ years" role.
   # Phrases that signal a GOOD early-career fit — small positive nudge.
   earlycareer_signals:
     - "entry level"

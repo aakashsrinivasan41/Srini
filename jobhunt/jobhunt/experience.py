@@ -9,21 +9,30 @@ from __future__ import annotations
 
 import re
 
-# "5+ years", "5-7 years", "minimum of 5 years", "at least 5 years experience"
-_YEARS = re.compile(
-    r"(\d{1,2})\s*(?:\+|\s*-\s*\d{1,2})?\s*(?:or more\s*)?years?(?:\s+of)?"
-    r"(?:\s+(?:relevant|professional|industry|work|hands-?on))?\s+experience",
+# Range-aware. For "2-5 years" we capture the LOWER bound (2) — you only need
+# to clear the floor of a range. For "4+ years" we capture 4. Then we take the
+# MAX lower-bound across all experience mentions, so a role asking "4+ yrs total
+# incl. 2+ yrs presales" is read as 4 (the binding requirement), while a single
+# "2-5 yrs" range is read as 2 (you're in range -> keep).
+_YEARS_EXP = re.compile(
+    r"(\d{1,2})\s*(?:[-–—]\s*\d{1,2})?\s*\+?\s*(?:or more\s*)?years?(?:\s+of)?"
+    r"(?:\s+\w+){0,3}?\s+experience",
     re.IGNORECASE,
 )
-# also catch "minimum of 5 years" / "at least 5 years" without trailing "experience"
+# "minimum of 5 years" / "at least 5 years" without a trailing "experience"
 _YEARS_LOOSE = re.compile(
-    r"(?:minimum of|at least|min\.?)\s*(\d{1,2})\s*\+?\s*years?", re.IGNORECASE
+    r"(?:minimum of|at least|min\.?|minimum)\s*(\d{1,2})\s*\+?\s*years?", re.IGNORECASE
 )
 
 
 def _max_required_years(text: str) -> int | None:
+    """Highest binding years-of-experience requirement, or None.
+
+    group(1) is always the lower bound of a range (or the bare number), so a
+    "2-5 years" range contributes 2, not 5.
+    """
     found: list[int] = []
-    for pat in (_YEARS, _YEARS_LOOSE):
+    for pat in (_YEARS_EXP, _YEARS_LOOSE):
         for m in pat.finditer(text):
             n = int(m.group(1))
             if 0 <= n <= 30:
