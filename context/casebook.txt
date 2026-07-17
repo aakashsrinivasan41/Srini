@@ -1,0 +1,304 @@
+                       US Quadball Casebook
+Welcome to the Rules Casebook for the 2024-25 US Quadball season. Below you’ll find examples of
+plays that have been called one way or inconsistently throughout the season, and have been given an
+official ruling from the US Quadball Officials and Rules Teams to be used during the 2024-2025 US
+Quadball season. This is a living document! Officials team will be adding more examples to this document
+as the season progresses, and each month the most recent updates will be covered at the Officials Town
+Hall.
+
+Beneath each rule there is a corresponding video and explanation of the ruling. If you have any questions,
+or would like clarity on calls you’ve seen on film this season, please send the question, film(with
+timestamp), and excerpt from the rulebook(if applicable) to officials@usquadball.com. We might use your
+video as an example in the future!
+
+
+
+
+1.Protected Keeper not advancing out of zone
+
+Rule: 7.4.1.B.i- A protected Keeper must directly and immediately advance the quadball out of the keeper
+zone, attempt to complete a pass, or drop the quadball to the ground.
+
+Clarification: More focus on “directly and immediately”, adjudication of a blue card for Delay of Game. The
+impetus for the protected Keeper to move forward towards the Keeper Zone line and not be called for
+delay of game is on the protected keeper, not the head referee's warning. Once the protected Keeper
+regains possession of the quadball, they must advance the quadball towards the keeper zone line. If they
+stop at any point, the head referee will say “Advance”(which acts as a warning for delay of game), and
+then begin to count down from 1. On the cadence of zero, if the player has stayed still, taken “baby
+steps”, walked at an angle, or refused to pass the ball, the head referee should stop play and award a
+blue card penalty to the protected Keeper for delay of game. This can extend to other behaviors if the
+head referee believes the offense is trying to delay the game. The protected Keeper can stop the
+countdown by taking a full step towards the Keeper Zone Line or releasing/passing the quadball. If a
+quadball is passed to a chaser in the keeper zone, rules of defensive pressure in Rule 7.4.1.C.ii apply, not
+this clarification for a protected Keeper in the Keeper Zone.
+
+Examples 1 and 2:
+https://youtu.be/dSkpiL-s8Dw?si=ntqHt_htghxfnUAM
+
+At 3:31 Orange Keeper begins with the quadball, protected in their zone. Rather than advance, they walk
+almost directly sideways, and then diagonal, before finally leaving the keeper zone. This is a blue card for
+Delay of game as soon as the Keeper starts walking to the left, and a turnover to Rutgers nearest eligible
+player.
+
+At 4:32 Orange Keeper begins with the quadball, protected in their zone. Rather than advance, they stop
+moving completely for a couple of seconds, before walking to the left, stopping again, and continuing this
+until leaving the keeper zone. This is a blue card for Delay of Game as soon as the Keeper stops for more
+than one second.
+
+Example 3:
+https://www.youtube.com/live/LutpwkLlm7o?si=oNClop8NpzO__pSH
+
+At 5:45, Black Keeper starts advancing the quadball out of the keeper zone, stops briefly, then continues
+to advance the quadball out of the Keeper Zone. This is legal, as the Keeper did not stop
+
+
+
+2.Third Dodgeball Immunity Limitations
+
+Rules 5.5.3-While a beater is claiming immunity, they are subject to the following restrictions:
+A. The beater must directly and immediately proceed to gain possession of the third
+dodgeball.
+i. The beater may approach the ball from any direction they prefer.
+ii. Taking any other action while immune is an immunity violation.
+iii.The beater loses their immunity once they gain possession of the dodgeball.
+a. The beater remains immune while attempting to pick up the third dodgeball, even if their fist is lowered
+in doing so.
+
+
+Example:
+https://youtu.be/t6h8iB9tphU?si=qPvojPbWtunq3xhZ
+
+Clip 1
+Beater claims third dodgeball immunity and runs to the third dodgeball. They stand over the dodgeball for
+over a second before picking it up to gain possession. Players are eligible to stand over the third
+dodgeball or reorient themselves around the dodgeball for no more than one second or a “one
+mississippi” count. This is a Blue Card for an immunity violation for not “directly and immediately
+proceeding to gain possession of the third dodgeball.”
+
+Clip 2
+Purple Beater begins the motion of beating Red Beater BEFORE Red Beater regained possession of the
+third dodgeball. Per 5.5.2.D, If an opponent begins the final singular natural motion on an attempted
+knockout before the beater loses their immunity, the formerly immune beater cannot be knocked out by
+that attempt. Red Beater is called clear and play continues. No penalty.
+
+Clip 3:
+Completely legal play. Red Beater claims third dodgeball immunity, directly and immediately proceeds to
+gain possession and does so. Purple Beater waits until Red Beater clearly has possession before making
+their beat.
+
+Clip 4:
+Completely legal play. Red Beater proceeds to claim possession, and takes a legal route(by approaching
+the ball from the direction they preferred). Green Beater waits until Red Beater gains possession(by
+kicking the third dodgeball) before attempting a beat, which is completely legal.
+Clip 5:
+Red Beater claims third dodgeball immunity and attempts to regain possession, but Green Beater is
+physically standing over the third dodgeball preventing Red Beater from gaining possession. This is a
+double dodgeball turnover and a back to hoops for Green Beater for Third Dodgeball Interference. See
+5.5.1.B.b.
+
+Clip 6:
+Completely legal play. Red Beater proceeds to claim possession, and takes a legal route(by approaching
+the ball from the direction they preferred). Green Beater waits until Red Beater gains possession(by
+kicking the third dodgeball) before attempting a beat, which is completely legal.
+
+
+
+3. Players making referee calls
+
+Rule 10.3.2. Players and team staff may not use verbal or visual referee signals or commands. This is a
+blue card penalty.
+
+Clarification:
+The one exception is players are allowed to mimic the referee signal for a good goal(two arms above the
+head), as it is a universal signal and rules and officials teams decided that players signaling it has little to
+no impact on the game. Two points of focus for this rule are players calling opponents “beat” or “clear”
+and players making “ball out” calls instead of the officials. These are blue card penalties.
+
+4. Delay of game(Stalling)
+
+Rule 7.4.1.D-E:
+
+i. On each drive, the Chasers on the offensive team must act with the overall primary intent to score.
+Players in possession of the quadball may not act with the overall primary intent to waste time for any
+reason.
+
+E. The head referee may issue a warning when the referee determines that the team is beginning to delay
+the game.
+
+i. Teams must respond immediately to this warning to avoid a penalty for delay of game. Multiple warnings
+may be given for delay of game during a single game, as the referee determines to be appropriate.
+
+Clarification: More emphasis on warning and, if necessary, carding for delay of game. More emphasis on
+officiating with the “teams must respond immediately to this warning to avoid penalty of game”. Once a
+head referee thinks a team is stalling, they will give a verbal “Warning for Delay of Game”. Upon saying
+that, the Head Referee will count(out loud) down from 3 and not stop until the offense has made a play
+that proves their overall primary intent is to score. Those plays are when the offense begins physically
+engaging the defense. This can be a pass to somewhere deeper into the defense, a drive, or even an
+attempt to score. You are allowed to drive and pass but the drive has to actually engage the defense.
+Once a team makes a play that stops a delay of game countdown from a referee, they are no longer in
+danger of being carded for delay of game. Were they to stall again later in the game, or even in the same
+possession, they should be given another warning, and thus another countdown. This should be
+continuous practice throughout the game and consistently enforced and constantly communicated to
+players.
+
+When adjudicating Delay of Game, please refer to the referee resource One Pager, found at
+members.usquadball.org/ref
+
+Example 1:
+https://youtu.be/aDVO6S4YFXE?si=chaTmKEX3yGkyUzK
+
+At 10:35, Black team has the quadball and starts to pass around the Blue Team Defense. The first pass at
+10:37 is a textbook example of engaging the defense to prevent delay of game. The Black Keeper
+receives the quadball and then stays on the outside of the play, barely moving, for roughly 10 seconds.
+Their primary intent was not to score, and at some point during that 10 seconds, the head referee should
+yell “Warning for Delay of Game” and start counting down from 3. Black team would then have had to
+engage the defense again to stop the countdown, with a play much like #4’s initial pass. Had Black
+continued to stall until the head referee finished their countdown(paired whistle blasts a second after
+saying the “1” in the 3-second countdown), Black keeper would have been given a blue card for delay of
+game, switched headbands, and the quadball would be turned over to Blue’s nearest eligible chaser.
+You’ll see at 11:15, the head referee warns for delay of game, and then Black engages the defense with a
+pass, abating the warning.
+
+5. Reckless Play
+
+Rule 6.3.2.b.E.i- It is the tackling player's responsibility to attempt to ensure the safety of the player being
+tackled. Reckless and dangerous tackles are illegal.
+
+Clarification: More emphasis on giving yellow cards for tackles made where the tackler did not attempt to
+ensure the safety of the player being tackled. “Ensuring safety” is the difference in guiding a player to the
+ground instead of throwing them to the ground. Reckless tackles apply to hits made with increased
+momentum resulting in a loss of control while tackling.
+
+Examples 1 and 2
+https://youtu.be/zkFjT18jI6k?feature=shared
+
+At 46:51, Red Chaser tackles Black Chaser by running at them, grabbing them with two arms, and using
+their momentum to twist and throw Black Chaser to the ground(by their neck). This is a yellow card
+penalty for either the illegal neck contact OR for reckless play.
+
+At 6:25, Red Chaser tackles Black Chaser by engaging with two arms and guiding Red Chaser all the
+way to the ground. This is a hard, but very legal, hit.
+
+Example 3:
+https://youtu.be/Wht8f4x7Mjg?si=IF4XIYmmr02_Z-BN
+
+At 4:34, Blue Chaser tackles Orange Chaser by running at them, grabbing them with two arms, and using
+their momentum to twist and throw Orange chaser to the ground. This is a yellow card penalty for reckless
+play.
+Example 4:
+https://www.youtube.com/live/LutpwkLlm7o?si=fu0JT3pqjTBv2q7g
+
+At 18:52, White Keeper attempts a tackle on Black Keeper. They attempt to make contact with two
+arms(albeit from behind) and proceed to leave the ground and lose control of the tackle attempt. Yellow
+card for illegal contact to the back OR yellow card penalty for reckless play.
+
+6. Charging a Stationary Player
+
+Rule 6.3.4.E.- It is illegal to charge a stationary opponent.
+i. If the stationary player has not been stationary long enough for the charging player to adjust
+their movement, that charging player will not be penalized.
+
+Note: To accelerate getting the casebook edited, the examples used below are pre-existing clipped plays
+on Instagram. As the season goes on these links will be replaced by videos housed on Youtube. Thank
+you to posttheclips4quadball!
+
+Clarification: A player with a ball is no longer allowed to charge a stationary player. This is to
+prevent dangerous and unnecessary contact, specifically when offensive players are driving to
+the hoops. This also gives an option for players to “opt-out of” or “opt-in to” contact.
+
+Explanation: Opting out of contact means players establishing themselves as a stationary player which is
+defined as a player whose feet are set and who has no horizontal momentum. By players establishing
+themselves as a stationary player, a player on the opposing team cannot legally charge them. The main
+thing a player can do to establish themselves as a stationary player is set their feet and stop moving like
+in Example 1 in the folder below. They can also brace for contact by holding their arms down, as if setting
+a common basketball screen (Examples 2 and 3). This is the recommended and safest way players
+should establish themselves as stationary players.
+
+    -​   If the stationary player still wants to contest the player with a ball, they can lift their arms to block
+         a shot or dunk, as shown in Example 4 in the folder below. This is still considered “opting-out” of
+         contact.
+
+A player “opts-in” to contact by doing things that make them ineligible to be considered stationary players.
+These actions can include jumping to contest a dunk,setting feet without giving time for the opposing
+player to respond, attempting a tackle, or moving their feet and not keeping them set. Players on the other
+side of this play should be mindful when generating enough momentum to cause forceful contact, and
+paying attention to players signaling their stationary status.
+
+
+Example 1: https://www.instagram.com/reel/C9s6JMpuaTJ/?igsh=MW9sYWxzNDl5MjB2NA==
+Red Keeper drives to the middle hoop and dunks the ball. In the process of dunking, Red Keeper creates
+forceful contact against White Chaser with their body. White Chaser loses their stationary status as soon
+as they move towards Red Keeper to contest the dunk, making this a legal, no-call play.
+Example 2: https://www.instagram.com/reel/C6kAhiiOXIw/?igsh=dmF1d295NXBsNHA0
+Black Keeper drives through two Blue defenders and dunks the ball. In the first hit, Blue Chaser loses
+their stationary status when they move their feet to engage with Black Keeper. That makes the contact by
+Black Keeper legal in that sense.
+    -​   Note, this could still be an illegal charge from Black Keeper because of the possibility they led the
+         charge with a single point of contact, it is unclear from the video.
+
+
+In the second hit, Blue Keeper takes steps to engage Black Keeper, making Blue Keeper lose their
+stationary status. Black Keeper decides to go around them and dunk the ball instead of going through
+them, even though charging Blue Keeper would have been legal in this instance.
+
+Example 3: https://www.instagram.com/reel/C5ik_NvOvwl/?igsh=NG5neTVienU0ZTVm
+Blue Chaser drives through Orange Defense and dunks on the middle hoop over Orange Chaser. Orange
+Chasers signals that they are opting into contact by not setting both their feet and contesting the shot.
+This makes the forceful contact generated by Blue Chase legal.
+
+Example 4:https://www.instagram.com/reel/C4syNkwO4tv/?igsh=MXFsMzFhNHgxd3hheg==
+Black Chaser shrugs off a tackle from White Keeper, then charges through White Chaser before scoring.
+White Chaser does not have set feet and thus is not stationary. Black Chasers charge is legal play.
+
+Example 5: https://www.instagram.com/reel/C4b8w1bs_Te/?igsh=MTg1ajU1eHR5MnB0bQ==
+Black Chaser dunks on the middle hoop over White Chaser. While contesting the dunk, White Chaser
+jumps in air, losing their stationary status and making the forceful contact generated from Black Chaser
+legal.
+
+
+Example 6:
+https://drive.google.com/drive/folders/1-AC8ZaKEMC04c6dh1t69kS4jx6wLIybH
+https://drive.google.com/file/d/1HSjBrNs1zRyEWjE-X2e3gGDA7ZpvlTez/view?usp=sharing
+
+
+Several examples of illegally charging a stationary player. Every example here is a yellow card
+penalty. ​
+​
+We understand there are still questions as to what an illegal version of this call looks like
+in game and are continuing to look for game footage of this penalty taking place. So far,
+instances have been out of camera focus or in games that do not have livestream/film. As
+the season continues, we will continue to add examples to the casebook to clarify legal
+and illegal charges to help maintain consistency.
+
+
+7. False Start
+
+Rule 3.2.1. A player that does either of the following after the head referee calls “Ready” but before the
+referee calls
+“Brooms up” has committed a false start and should send themselves back to hoops.
+i. The player already has their broom off the ground at brooms up call.
+ii. The player moves early and touches the other side of their starting line before brooms up.
+J. A player that commits a false start and continues to pursue active play shall be given a blue card.
+
+Clarification: False Starts will be back to hoops offenses unless said players continue to pursue active
+play.
+
+Example 1:
+https://www.youtube.com/live/s07N6iqOj5g?si=NuP_EalQSfxyLvlX
+
+At 4:50:28, Grey Beater false starts. This would now be a back to hoops instead of a stoppage of play and
+blue card.
+
+8. Propelling a ball off-pitch
+
+Rule 7.5.2.G- It is illegal to propel a ball with the intent of sending any ball out-of-bounds.
+
+Clarification: Head Referees should evaluate whether a propelled ball off-pitch was actually intentional, or
+the harmless result of a play gone awry(missed beat, missed pass, missed shot). In cases where there is
+reasonable doubt that the ball was propelled with the intent of sending it out of bounds, the normal
+inbounding procedure should be followed. Components to take into account are: distance from sidelines,
+temperature conditions that may affect the trajectory of the ball, and amount of control the propeller had
+(such as a bad kick or swat).
+    -​ This rule does not supercede the penalty for illegal swat for seekers. If the first touch after a
+         seeker swat is out of bounds, they still receive a blue card.
+
