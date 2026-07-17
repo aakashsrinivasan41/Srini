@@ -11,9 +11,9 @@ core mechanics match, but IQA-specific numbers may differ (e.g. IQA flag = 30 pt
 ends the game; USQ = 35 pts + set score). This does not affect the seeker-floor action
 here.
 
-**Team key (light blue = INDIA / maroon = MEXICO is a strong inference, not proven —
-see Q1):**
-- **India** — light / powder-blue jersey, white shorts (seen: #17, #25).
+**Team key (CONFIRMED by user 2026-07-17):**
+- **India (the user's team)** — light / powder-blue jersey, white shorts; **attacks toward
+  the right** in this clip (seen: #17, #25). Every light-blue player is a teammate.
 - **Mexico** — maroon jersey, black shorts/leggings (seen: #41, a white-headband chaser).
 
 Legend: **[OBS]** = directly visible in frames · **[INF]** = inferred from rules/context ·
@@ -46,14 +46,20 @@ Legend: **[OBS]** = directly visible in frames · **[INF]** = inferred from rule
 - **[?]** Whether India actually **shot** (quaffle released at a hoop) vs. was stopped
   before shooting is **not resolvable**; I can see the contest but not a clean shot.
 
-### Phase C — possession flips to Mexico at their hoops · t≈11.5–13 s (19:44–19:46)
-- **[OBS]** Out of the hoop-line scramble, a **maroon (Mexico) player comes away with the
-  white quaffle**; the **orange dodgeball is carried out to the far left** by a light-blue
+### Phase C — hoop-line scramble, advantage call, ball stopped · t≈11.5–13 s (19:44–19:46)
+- **[OBS]** A **collapse of bodies at Mexico's hoops**; out of it the **white quaffle**
+  comes free and the **orange dodgeball is carried out to the far left** by a light-blue
   player.
-- **[?] Exact turnover mechanism is NOT resolvable** — the frames show a collapse of
-  bodies at the hoop and then Mexico with the ball. It could be a **keeper save**, a
-  **rebound off a missed shot**, an **interception/strip**, or a **beat that forced an
-  India carrier to drop** — I cannot distinguish these from this footage. (See Q4.)
+- **[USER-CONFIRMED]** A **referee raised one arm straight up here** — this is an
+  **advantage / delayed-penalty signal** (USQ §9.5.1 / §9.6.2), thrown for a **suspected
+  illegal tackle** (a contact foul; the exact reason is unknown even to the user). Because
+  it was an advantage call, **play was NOT whistled dead — the foul was played on**, which
+  is why the pack keeps running in Phase D. **India (the user's team) stopped the ball** in
+  this sequence.
+- **[?]** How the advantage call maps onto the *carrier* of the following break is not
+  fully resolvable from the footage: I read the subsequent under-arm carrier as **maroon
+  (Mexico)** at low confidence, but with an advantage in progress the formal possession
+  state is murky. What's solid: a foul was played-on under advantage, and no goal resulted.
 
 ### Phase D — Mexico fast-breaks the other way (toward frame-left) · t≈13–16 s (19:46–19:48)
 - **[OBS]** **Mexico transitions at speed toward India's end.** A **maroon chaser/keeper
@@ -99,14 +105,17 @@ Legend: **[OBS]** = directly visible in frames · **[INF]** = inferred from rule
 - **Why there's no seeker/flag action:** game clock < 20:00 means the **seeker floor** is
   still on — seekers and the flag runner have not entered (USQ 3.4.3). Everything here is
   chaser + beater play, which is exactly what we see.
-- **The yellow-shirted person:** because seekers/flag runner are **not legal in the seeker
-  floor**, a yellow figure moving with play is most consistent with an **assistant/field
-  referee in a yellow officiating shirt**, not a player. **[INF, flagged — Q3.]**
+- **The yellow-shirted person:** **[USER-CONFIRMED]** this is **seeker/flag-period prep**,
+  not an on-field defender. Right after the 20-minute mark the game switches to seeker/flag
+  play; the **PiP inset is a dedicated "seeker camera"** being readied, and the yellow-clad
+  figure belongs to that upcoming seeker/flag game (flag runner + seekers wear yellow).
+  This corrects my earlier "assistant referee in yellow" guess.
 
 ## Documentation gaps (footage shows it; docs don't fully explain)
-- The rulebook describes the **mechanics** of a turnover but the footage can't show me
-  **which** mechanism occurred at Mexico's hoops (Phase C) — that's a footage-resolution
-  gap, not a rules gap.
-- Officiating **dress conventions** (a yellow AR shirt) aren't in the rulebook I have; the
-  research notes flag ball/kit colors as non-standardized. So the yellow official is an
-  inference from context, not from documentation.
+- The rulebook explains advantage/delayed penalties, but the footage can't show me the
+  **specific illegal-tackle** the official flagged at Mexico's hoops (Phase C), nor how
+  the advantage resolved after the clip — footage-resolution + clip-length gaps, not rules
+  gaps. (User: reason unknown to them either.)
+- The **"seeker camera" / pre-positioning of flag-period personnel** before the 20-minute
+  mark is an event/broadcast convention, not something the rulebook covers — learned from
+  the user, not the docs.

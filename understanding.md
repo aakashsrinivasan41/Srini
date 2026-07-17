@@ -59,6 +59,23 @@ Last updated: **2026-07-17** (first session).
   volleyball, carried under-arm) is only separable from the orange dodgeball at heavy
   crop+upscale. Position headbands are mostly below the resolution limit.
 
+## 3b. User-confirmed facts folded in (2026-07-17)
+
+- **Team mapping confirmed:** India = lighter (light blue), attacks right; Mexico = darker
+  (maroon). India = the user's team (see §5).
+- **The yellow figure is seeker/flag prep, NOT an on-field defender or AR.** After the
+  20-minute mark the game switches to seeker/flag play; the **PiP inset is a dedicated
+  "seeker camera"** being made ready before the flag period, and the yellow-clad person is
+  part of that upcoming seeker/flag game getting ready (the flag runner and seekers both
+  wear yellow). Correction to my earlier "assistant referee in yellow" guess.
+- **The referee's raised arm at the hoop scramble (~t=12 s) = an advantage / delayed
+  penalty** (rulebook §9.5.1 / §9.6.2: an official raises one arm straight up and play
+  continues under advantage). Per the user it was for a **suspected illegal tackle** (a
+  contact foul; exact reason unknown even to them). This is why play *continued* — the
+  foul was played on, not whistled dead. The user's team (India) **stopped the ball** in
+  that sequence. **Recognize on tape:** a ref with one arm held straight up = advantage/
+  delayed penalty in progress → expect a stoppage/card when the advantage abates.
+
 ## 4. Terminology I can now recognize *visually*
 
 - **Quaffle vs dodgeball on video:** quaffle = **white/light volleyball, carried under the
@@ -74,8 +91,10 @@ Last updated: **2026-07-17** (first session).
 
 ## 5. Team / opponent patterns to track in future clips
 
-- **India (light blue) vs Mexico (maroon)** — mapping is a strong inference, unconfirmed
-  (Q1). If confirmed, tag India as "my team."
+- **India (light blue) vs Mexico (maroon)** — **CONFIRMED by the user (2026-07-17).**
+  India wears the **lighter** kit and **attacks toward the right** in this clip; Mexico is
+  the **darker** kit. **India is the user's team → every light-blue player is a teammate;
+  every maroon player is an opponent.**
 - India known numbers so far: **#17, #25**. Mexico: **#41** (a chaser — white headband).
 - Mexico led this game **120–90** late in the seeker floor; watch whether Mexico's
   transition game (fast breaks off turnovers) is a repeated strength.
@@ -95,6 +114,10 @@ scramble at the hoop, Mexico wins the quaffle** (~t=12 s; exact mechanism unreso
 and **fast-breaks the other way** with a maroon chaser/keeper carrying the ball under-arm
 (~t=13–16 s) while **both teams' beaters fight over the orange dodgeball inside the running
 pack**; the break reaches India's end and **disperses with no goal** (~t=16–20 s). Pure
-chaser+beater play (seeker floor). Full detail in `reconstruction.md`; observation log in
-`notes.md`. Key limits: quaffle only trackable on zoom, most headbands/positions below
-resolution, turnover mechanism and any knockout not confirmable.
+chaser+beater play (seeker floor). **User-confirmed:** India (my team) = lighter kit
+attacking right, Mexico = maroon; the yellow figure/PiP = seeker-camera prep for the
+upcoming flag period; and a referee's **raised arm at the hoop scramble = advantage /
+delayed penalty for a suspected illegal tackle** (India stopped the ball). Full detail in
+`reconstruction.md`; observation log in `notes.md`. Remaining limits: quaffle only
+trackable on zoom, most headbands/positions below resolution, and the precise possession/
+carrier through the advantage call not fully resolvable from this footage.

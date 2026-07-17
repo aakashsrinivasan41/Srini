@@ -185,3 +185,24 @@ From the official USQ pitch diagram (`pitch_diagram_IMG_0453.png`) and §2.1: [U
   scoreboard, not the visuals. [§4.4.1, §3.4.3; web 2026-07-17]
 - **Yellow on the pitch:** a yellow headband (seeker) or yellow-clad person (flag runner) only
   appears AFTER ~20 min — their presence dates the frame to the flag period.
+
+---
+
+## Referee signals — verified from rulebook + observed on tape (added 2026-07-17)
+
+- **One arm held straight up in the air = ADVANTAGE / DELAYED PENALTY in progress.**
+  An official saw a foul and is letting play continue; a marker may be thrown at the
+  quaffle's location. Play will be stopped (and any card given) when the advantage abates
+  — the fouling team gains the quaffle, a goal is scored for the fouled team, the fouled
+  team stops trying to score, they commit their own foul, or the flag is caught.
+  (USQ Rulebook §9.5.1 Calling Advantage; §9.6.2 Calling a Delayed Penalty — a non-head
+  official "raises their hand and play continues as a delayed penalty," and if the head
+  ref plays on, "they shall raise their own arm as well.")
+  *Seen in Clip 1: a ref raised an arm during a hoop-line scramble for a suspected illegal
+  tackle; play continued — the whole fast break happened under a played-on foul.*
+- **Good goal = one long whistle + both arms raised.** (§4.1.1)
+- **Quaffle-live after keeper restart = one short whistle.** (§4.2.2)
+- Contact fouls to know the words for (§6): **wrap** (encircling an opponent with an arm),
+  **tackle** (a wrap that brings a player to the ground), **charge** (forceful momentum
+  contact with no wrap attempt). An "illegal tackle" = a tackle/wrap that breaks these
+  rules (e.g. wrapping a player without the ball, or a wrap from behind with momentum).
