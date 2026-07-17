@@ -25,3 +25,29 @@ These are facts the user confirmed directly — treat as ground truth in future 
 - India vs Mexico individual player numbers / who specifically to track.
 - Which ruleset the user's league uses for future clips (this match = IQA 2023).
 - Whether the file's audio has usable commentary to mine next time.
+
+---
+
+## The user's USQ club team (added 2026-07-17, session 2)
+- The user plays for the **Bay Area Breakers** (a **USQ** club team). Their league uses the
+  **USQ ruleset** (so the local rulebook applies directly — no IQA caveat).
+- **Breakers kit:** light-blue / white **TIE-DYE** jerseys, **orange numbers**, shorts vary
+  (**pink** seen). **The user wears #58** (a chaser in these clips; not their usual number).
+  **Keeper = green headband.** Teammates seen: #13, #15.
+- Opponent in these clips: **New Jersey Dice** — **solid royal blue** jerseys, orange
+  numbers (#6, #10, #12). Per the user, **Dice are a higher-tier team, Breakers lower-tier**
+  (a mid-season game). Not a basis to judge the user — study only.
+- ID hazard: both teams wear blue+orange; distinguish by **tie-dye vs solid** and shorts.
+
+## Clips 2 & 3 (2026-07-17)
+- Clip 2 `...294866_1.mp4` = **Breakers OFFENSE**, 43 s (handheld, has 2× fast-forward).
+- Clip 3 `...294968.mp4` = **Breakers DEFENSE**, 20 s (YouTube screen-grab, MSC-container
+  backdrop). Both are the SAME game per the user; backdrops differ (different vantage).
+- Quaffle = pink; bludgers = green + blue/purple. Balls colors are per-game, not fixed.
+
+## New open questions from session 2 (user to answer)
+- Who scored at the end of the DEFENSE clip ("our team scores")? Did the Breakers win the
+  ball and score, or did the Dice score on that attack?
+- Who were the Breakers' two **beaters** in these clips (numbers / where were they meant to
+  be)? This would let the beater analysis go from "bludger positions" to real assessment.
+- Are Clips 2 and 3 one continuous sequence (offense → turnover → defense), or separate?

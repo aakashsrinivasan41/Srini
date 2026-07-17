@@ -5,7 +5,7 @@ Separates **what's in the rulebook** from **what watching real tape taught me**.
 Companion files live in `./context/` (rules_summary, terminology, tactics, visual_id,
 sources) and per-clip notes in `notes.md` / `reconstruction.md`.
 
-Last updated: **2026-07-17** (first session).
+Last updated: **2026-07-17** (session 2 — added Bay Area Breakers vs NJ Dice, USQ).
 
 ---
 
@@ -76,6 +76,26 @@ Last updated: **2026-07-17** (first session).
   that sequence. **Recognize on tape:** a ref with one arm held straight up = advantage/
   delayed penalty in progress → expect a stoppage/card when the advantage abates.
 
+## 3c. Session 2 learnings — Breakers–Dice USQ clips (2026-07-17)
+
+- **Two same-color teams is a real ID hazard.** Breakers (tie-dye light blue) and Dice
+  (solid royal blue) BOTH wear blue with orange numbers. The reliable tells: **tie-dye vs
+  solid**, and **shorts** (Breakers wore pink in the defense clip). Read shorts + jersey
+  texture, not just "blue."
+- **Ball colors are team/tournament-specific, not fixed.** Here the **quaffle is pink** and
+  **bludgers are green and blue/purple** — opposite-ish to Clip 1's pink-quaffle/blue-
+  bludger scheme was actually similar, but the point stands: confirm ball colors per game.
+- **Beater positioning is readable even when I can't ID the beaters.** On the Breakers'
+  offense, both bludger-carriers sat on the **weak-side (left) flank away from the ball**
+  while chasers drove the hoops on the right — the kind of thing to watch for: is a beater
+  with a bludger actually **near/ahead of the drive** to open a no-bludger window, or
+  parked off-ball?
+- **Amateur handheld footage caveats:** expect a spectator in frame, "2×" fast-forward
+  sections (motion unusable there), and the play drifting to the far end (small/occluded).
+  The real-speed, near-side windows are where analysis is possible.
+- **USQ ruleset now applies directly** (my local rulebook) — no IQA caveat needed for this
+  game, unlike Clip 1 (India–Mexico, IQA).
+
 ## 4. Terminology I can now recognize *visually*
 
 - **Quaffle vs dodgeball on video:** quaffle = **white/light volleyball, carried under the
@@ -101,9 +121,43 @@ Last updated: **2026-07-17** (first session).
 - Watch for **which team tends to hold bludger control** and whether India manufactures
   no-bludger windows to finish drives.
 
+**Bay Area Breakers (user's USQ club team) vs New Jersey Dice** — from Clips 2 & 3
+(2026-07-17):
+- **Breakers = light-blue TIE-DYE + orange numbers (+ pink shorts sometimes); user = #58
+  (chaser today, not their usual number). Keeper = green headband. Also seen #13, #15.**
+- **Dice = solid royal blue + orange numbers; seen #6, #10, #12.** User says Dice are a
+  higher-tier team, Breakers lower — expect a skill/organization gap.
+- Track the **Breakers' beater positioning** across future clips: recurring tendency to
+  keep bludgers off-ball on the weak-side flank? (One-clip observation, not a verdict.)
+- Open: who scored at the end of the defense clip; whether the two clips are one continuous
+  sequence.
+
 ---
 
 ## Clip log (dated, newest first)
+
+### 2026-07-17 — Clip 3: `f10f9406-RPReplay_Final1784294968.mp4` (Breakers DEFENSE, 20 s)
+*USQ club game, **Bay Area Breakers** (user's team, light-blue TIE-DYE + pink shorts) vs
+**New Jersey Dice** (solid royal blue). Screen-grab of a YouTube video; closer angle; "MSC"
+container backdrop.* 20 s of the Breakers defending their hoops. The Dice attack: a **pink
+quaffle is lofted/shot at the hoops (~t=14) and contested**; Dice **#6 drives at the hoops
+(~t=16)** and a **Breaker (user #58) lunges to wrap but does not complete the tackle**; by
+~t=17.7 the play clears and the Breakers jog out (possible transition). **No goal confirmed
+in-frame** — the user's "then our team scores" is unverified here (Q). Quaffle pink; a blue
+bludger near the hoops. Detail in `notes_clip2_breakers_dice.md`.
+
+### 2026-07-17 — Clip 2: `4f09231e-RPReplay_Final1784294866_1.mp4` (Breakers OFFENSE, 43 s)
+*Same game/teams as Clip 3. Handheld sideline video; a black-hoodie spectator intermittently
+blocks the frame; "2×" fast-forward from ~t=29–37 & ~t=42.* One long **Breakers offensive
+possession**. **#58 (user) is a central chaser** (clear t≈4.5–6.0), closely defended —
+consistent with the reported catch→return→catch. The **Breakers' two beaters sit on the LEFT
+flank with a GREEN bludger, away from the ball** (t≈3–9). Play works to the hoops, drifts to
+the far end (sped up), returns to the **center hoops (~t=38–42)** where the user's **shot is
+blocked** in a congested scramble and the **Breakers lose the ball** (no goal). During that
+attack two bludgers sat idle off the flanks rather than clearing the shooter's lane. Could
+NOT isolate #58's exact shot on the wide shot (occlusion/2×). Detail in
+`notes_clip2_breakers_dice.md`.
+
 
 ### 2026-07-17 — Clip 1: `de906c40-RPReplay_Final1784292354.mp4`
 *IQA World Cup 2023, India vs Mexico, seeker floor final ~30 s (clock 19:30→19:52),
