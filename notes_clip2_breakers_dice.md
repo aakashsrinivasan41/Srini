@@ -138,3 +138,30 @@ dodgeballs or determine "control" at each moment. What I *can* state:
   Breakers become defense (which is exactly the Clip A → Clip B story, IF the clips are
   contiguous — unconfirmed).
 - **No keeper-zone protection abuse seen:** ordinary open-play offense/defense.
+
+---
+
+## USER ANSWERS — folded in & corrections (2026-07-17)
+
+The user answered the open questions. Corrections to the analysis above:
+
+- **Defense clip contains TWO plays:** the **Dice SCORED** on one; on the other the
+  **Breakers got a stop (~20-min game mark) but a ref called a foul.** → The scorer was the
+  **Dice**, not the Breakers. My "our team scores" reading was wrong.
+- **Bludger control (KEY):** the **Breakers did NOT have control — one dodgeball only; the
+  Dice had two (control).** This corrects my offense beater note: the Breakers' beater game
+  was limited by *lacking control*, not merely by flank positioning. With one bludger you
+  can't hold a no-bludger window open; the fix is winning a bludger back (control battle).
+- **Dice beater tactic:** **"both Dice beaters chilled in the back to keep control and let
+  their chasers score."** Correct control-protection play — not throwing = not risking a
+  bludger = keeping the 2-ball advantage. "Somehow they still scored" = control + patient
+  chasers vs an out-of-control defense.
+- **The blocked shot (offense) was EARLIER**, not the final scramble: **#58 shot → blocked
+  → #58 recovered their own block → chucked it back out to reset.** OBS corroboration
+  (~t=13.5–15.2): a Breaker recovers a loose pink quaffle at the attacking hoops and throws
+  it back out; a blue bludger is thrown in; the **green-headband keeper is up on offense**.
+  (Could read #15 on the recoverer; couldn't confirm #58 vs #15 in the blur.)
+- **Clips 2 & 3 are "semi-continuous"** — near each other in the game, not a perfectly
+  contiguous single sequence.
+- **Beater-ID method (user's tip):** identify beaters by **who's holding a dodgeball / who
+  is NOT engaged with the quaffle movement**, rather than headband color at this resolution.

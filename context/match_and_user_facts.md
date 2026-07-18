@@ -51,3 +51,16 @@ These are facts the user confirmed directly — treat as ground truth in future 
 - Who were the Breakers' two **beaters** in these clips (numbers / where were they meant to
   be)? This would let the beater analysis go from "bludger positions" to real assessment.
 - Are Clips 2 and 3 one continuous sequence (offense → turnover → defense), or separate?
+
+## Session-2 answers confirmed (2026-07-17)
+- Defense clip: **Dice scored** on one play; Breakers got a stop (~20-min mark) negated by a
+  **ref foul call** on another. (Not a Breakers goal.)
+- **Bludger control:** Breakers had **1 dodgeball (no control)**; Dice had **2 (control)**.
+  Dice beaters **played deep/passive to protect control and let their chasers score** — and
+  still scored. Lesson: without control, the beater game is lost until you win a bludger
+  back; the controlling team correctly keeps its beaters conservative.
+- Offense clip: #58's **blocked shot was earlier** (~t=13.5–15.5); #58 **recovered the block
+  and reset** the ball. Keeper (green headband) plays up as a 4th attacker.
+- Clips 2 & 3 are **semi-continuous**.
+- Beater-ID heuristic (user): find whoever **holds a dodgeball / isn't engaged with the
+  quaffle**.

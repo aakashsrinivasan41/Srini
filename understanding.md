@@ -85,11 +85,23 @@ Last updated: **2026-07-17** (session 2 — added Bay Area Breakers vs NJ Dice, 
 - **Ball colors are team/tournament-specific, not fixed.** Here the **quaffle is pink** and
   **bludgers are green and blue/purple** — opposite-ish to Clip 1's pink-quaffle/blue-
   bludger scheme was actually similar, but the point stands: confirm ball colors per game.
-- **Beater positioning is readable even when I can't ID the beaters.** On the Breakers'
-  offense, both bludger-carriers sat on the **weak-side (left) flank away from the ball**
-  while chasers drove the hoops on the right — the kind of thing to watch for: is a beater
-  with a bludger actually **near/ahead of the drive** to open a no-bludger window, or
-  parked off-ball?
+- **Control decides the beater game — and I had the read backwards at first.** User
+  confirmed: **the Breakers did NOT have control — they had just ONE dodgeball; the Dice had
+  TWO (control).** So my first read ("Breakers beaters parked off-ball, could've supported
+  the drive") was wrong-framed: with only one bludger you *can't* create a sustained
+  no-bludger window, so the beater game was already lost at the **control** level, not
+  positioning. To change it the Breakers would need to **win a bludger back** (bludger
+  exchange / force+recover a Dice beat) to get to 2 — a control battle, not a repositioning
+  tweak.
+- **The controlling team's beaters SHOULD play conservatively — and the Dice did.** User:
+  **"Dice's two beaters just chilled in the back to keep control and let their chasers
+  score."** That's textbook: when you hold 2 dodgeballs, *not throwing* means you can't lose
+  a bludger, so you preserve control and let your chasers work. A deep/passive controlling
+  beater is a feature, not laziness. (And "somehow they still scored" — control + patient
+  chasers beats an out-of-control defense.)
+- **How to find beaters on tape (user's tip):** look for **who is holding a dodgeball** or
+  **who is NOT engaged with the quaffle movement** — beaters hover off the ball. That's more
+  reliable than hunting for black headbands at this resolution.
 - **Amateur handheld footage caveats:** expect a spectator in frame, "2×" fast-forward
   sections (motion unusable there), and the play drifting to the far end (small/occluded).
   The real-speed, near-side windows are where analysis is possible.
@@ -142,21 +154,24 @@ Last updated: **2026-07-17** (session 2 — added Bay Area Breakers vs NJ Dice, 
 container backdrop.* 20 s of the Breakers defending their hoops. The Dice attack: a **pink
 quaffle is lofted/shot at the hoops (~t=14) and contested**; Dice **#6 drives at the hoops
 (~t=16)** and a **Breaker (user #58) lunges to wrap but does not complete the tackle**; by
-~t=17.7 the play clears and the Breakers jog out (possible transition). **No goal confirmed
-in-frame** — the user's "then our team scores" is unverified here (Q). Quaffle pink; a blue
-bludger near the hoops. Detail in `notes_clip2_breakers_dice.md`.
+~t=17.7 the play clears. **User-confirmed:** it contains **two plays — the Dice SCORED on
+one; on the other the Breakers got a stop (~20-min mark) but a ref called a foul.** So the
+scorer here was the **Dice**, not us (my earlier "our team scores" read was wrong). Quaffle
+pink; a blue bludger near the hoops. Detail in `notes_clip2_breakers_dice.md`.
 
 ### 2026-07-17 — Clip 2: `4f09231e-RPReplay_Final1784294866_1.mp4` (Breakers OFFENSE, 43 s)
 *Same game/teams as Clip 3. Handheld sideline video; a black-hoodie spectator intermittently
 blocks the frame; "2×" fast-forward from ~t=29–37 & ~t=42.* One long **Breakers offensive
 possession**. **#58 (user) is a central chaser** (clear t≈4.5–6.0), closely defended —
 consistent with the reported catch→return→catch. The **Breakers' two beaters sit on the LEFT
-flank with a GREEN bludger, away from the ball** (t≈3–9). Play works to the hoops, drifts to
-the far end (sped up), returns to the **center hoops (~t=38–42)** where the user's **shot is
-blocked** in a congested scramble and the **Breakers lose the ball** (no goal). During that
-attack two bludgers sat idle off the flanks rather than clearing the shooter's lane. Could
-NOT isolate #58's exact shot on the wide shot (occlusion/2×). Detail in
-`notes_clip2_breakers_dice.md`.
+flank with a GREEN bludger, away from the ball** (t≈3–9). **User-confirmed:** the **blocked shot was EARLIER** (near-side hoops, ~t=13.5–15.5, not the
+final scramble) — **#58 shot, it was blocked, #58 recovered their own block and chucked it
+back out to reset.** (OBS corroboration: a Breaker recovers a loose pink quaffle at the
+attacking hoops ~t=13.5 and throws it back out ~t=14.7–15.2, blue bludger thrown in the mix;
+I most clearly read #15 on the recoverer, couldn't confirm #58 vs #15 in the scramble.) The
+green-headband **keeper is pushed up on offense** here (keeper as 4th attacker). Play then
+drifts far (sped up) and returns to the center hoops (~t=38–42) where the **Breakers lose
+the ball** in a scramble (no goal). Detail in `notes_clip2_breakers_dice.md`.
 
 
 ### 2026-07-17 — Clip 1: `de906c40-RPReplay_Final1784292354.mp4`
