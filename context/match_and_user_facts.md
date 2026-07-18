@@ -64,3 +64,9 @@ These are facts the user confirmed directly — treat as ground truth in future 
 - Clips 2 & 3 are **semi-continuous**.
 - Beater-ID heuristic (user): find whoever **holds a dodgeball / isn't engaged with the
   quaffle**.
+
+## Correction (2026-07-17): #58's role on the earlier blocked-shot beat
+- #58 (user) was positioned **BEHIND the hoops** (behind-hoops chaser / passing outlet) and
+  **threw a pass from behind the hoops to the teammate who recovered** the ball. #58 was the
+  **passer, not the recoverer** (supersedes the earlier "#58 recovered own block" note).
+  The recoverer read as **#15**. → #58 plays a behind-hoops outlet role at times.

@@ -165,3 +165,9 @@ The user answered the open questions. Corrections to the analysis above:
   contiguous single sequence.
 - **Beater-ID method (user's tip):** identify beaters by **who's holding a dodgeball / who
   is NOT engaged with the quaffle movement**, rather than headband color at this resolution.
+
+## Correction #2 (2026-07-17): #58 was BEHIND the hoops on the reset
+- Not "#58 recovered their own block." Actual: **#58 was positioned behind the hoops** and
+  **threw a pass from behind the hoops to the teammate who recovered** the ball (recoverer
+  read as #15). #58 = the passer/outlet, not the recoverer. Behind-hoops outlet is a real
+  chaser role (dish for a dunk or reset the offense).

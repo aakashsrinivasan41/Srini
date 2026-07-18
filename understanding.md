@@ -165,11 +165,12 @@ blocks the frame; "2×" fast-forward from ~t=29–37 & ~t=42.* One long **Breake
 possession**. **#58 (user) is a central chaser** (clear t≈4.5–6.0), closely defended —
 consistent with the reported catch→return→catch. The **Breakers' two beaters sit on the LEFT
 flank with a GREEN bludger, away from the ball** (t≈3–9). **User-confirmed:** the **blocked shot was EARLIER** (near-side hoops, ~t=13.5–15.5, not the
-final scramble) — **#58 shot, it was blocked, #58 recovered their own block and chucked it
-back out to reset.** (OBS corroboration: a Breaker recovers a loose pink quaffle at the
-attacking hoops ~t=13.5 and throws it back out ~t=14.7–15.2, blue bludger thrown in the mix;
-I most clearly read #15 on the recoverer, couldn't confirm #58 vs #15 in the scramble.) The
-green-headband **keeper is pushed up on offense** here (keeper as 4th attacker). Play then
+final scramble). **#58 was positioned BEHIND the hoops** (a behind-hoops chaser / passing
+outlet) and **threw a pass from behind the hoops to the teammate who recovered** — so #58
+was the **passer, not the recoverer** (correcting the earlier "recovered own block" read).
+(OBS corroboration: a Breaker recovers a loose pink quaffle at the attacking hoops ~t=13.5
+and the ball is thrown/reset ~t=14.7–15.2 with a blue bludger in the mix; the recoverer read
+as **#15**.) The green-headband **keeper is up on offense** here (keeper as 4th attacker). Play then
 drifts far (sped up) and returns to the center hoops (~t=38–42) where the **Breakers lose
 the ball** in a scramble (no goal). Detail in `notes_clip2_breakers_dice.md`.
 
